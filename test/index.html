@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Markdown+Math Debug Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.4.1/github-markdown.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/mdmath/master/css/mdmath.css">
+    <style>
+       body {
+          color: darkslategray;
+          background-color: cornsilk;
+        	max-width: 40rem;
+          margin: 2rem;
+       }
+       a {
+          color: orangered;
+       }
+      .inverse {
+          color: cornsilk;
+          background-color: darkslategray;
+      }
+      td, th { border: 1px solid black; white-space:pre; font:12px monospace; overflow:hidden; text-overflow: ellipsis; padding:3px; }
+      th { font-weight:bold; }
+
+      eq, eqn { background-color:antiquewhite; }
+    </style>
+  </head>
+  <body>
+    <h1>Markdown+Math Tests</h1>
+    <table id="test-table" style="table-layout:fixed; border:solid black 1px; border-collapse: collapse; max-width:100%;">
+      <thead>
+        <tr>
+          <th style="width:20px">i</th>
+          <th style="width:20px">valid</th>
+          <th style="width:250px;max-width:250px">src</th>
+          <th style="width:201px">render</th>
+          <th style="width:201px">comment</th>
+        </tr>
+           <tr id="#0">
+      <td style="text-align:right;">0</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$a$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">single character inline equation.</td>
+    </tr>
+   <tr id="#1">
+      <td style="text-align:right;">1</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$\varphi$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>φ</mi></mrow><annotation encoding="application/x-tex">\\varphi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">φ</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">inline equation with single greek character</td>
+    </tr>
+   <tr id="#2">
+      <td style="text-align:right;">2</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$1+1=2$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">simple equation starting and ending with numbers.</td>
+    </tr>
+   <tr id="#3">
+      <td style="text-align:right;">3</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$1+1&lt;3$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>&lt;</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">1+1&lt;3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">&lt;</span><span class="mord mathrm">3</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">simple equation including special html character.</td>
+    </tr>
+   <tr id="#4">
+      <td style="text-align:right;">4</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">You get 3$ if you solve $1+2$</td>
+      <td style="text-align:center;"><p>You get 3$ if you solve <eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">2</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">use of currency symbol</td>
+    </tr>
+   <tr id="#5">
+      <td style="text-align:right;">5</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">If you solve $1+2$ you get $3</td>
+      <td style="text-align:center;"><p>If you solve <eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">2</span></span></span></span></eq> you get $3</p>
+</td>
+      <td style="text-align:left;">use of currency symbol</td>
+    </tr>
+   <tr id="#6">
+      <td style="text-align:right;">6</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$\frac{1}{2}$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\\frac{1}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">2</span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">inline fraction</td>
+    </tr>
+   <tr id="#7">
+      <td style="text-align:right;">7</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$\begin{pmatrix}x\\y\end{pmatrix}$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mo fence="true">(</mo><mtable><mtr><mtd><mrow><mi>x</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>y</mi></mrow></mtd></mtr></mtable><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\\begin{pmatrix}x\\\\y\\end{pmatrix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.45em;"></span><span class="strut bottom" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="base textstyle uncramped"><span class="minner textstyle uncramped"><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle uncramped"><span class="mord mathit">x</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">y</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">inline column vector</td>
+    </tr>
+   <tr id="#8">
+      <td style="text-align:right;">8</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">${\tilde\bold e}_\alpha$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mover accent="true"><mi mathvariant="bold">e</mi><mo>~</mo></mover></mrow><mi>α</mi></msub></mrow><annotation encoding="application/x-tex">{\\tilde\\bold e}\_\\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.6813em;"></span><span class="strut bottom" style="height:0.8313em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathbf">e</span></span><span style="top:-0.36344em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.0037em;">α</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">inline bold vector notation</td>
+    </tr>
+   <tr id="#9">
+      <td style="text-align:right;">9</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$a^{b}$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mrow><mi>b</mi></mrow></msup></mrow><annotation encoding="application/x-tex">a^{b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.849108em;"></span><span class="strut bottom" style="height:0.849108em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">b</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">exponentiation</td>
+    </tr>
+   <tr id="#10">
+      <td style="text-align:right;">10</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$a^*b$ with $a^*$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mo>∗</mo></msup><mi>b</mi></mrow><annotation encoding="application/x-tex">a^\*b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord">∗</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit">b</span></span></span></span></eq> with <eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">a^\*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.688696em;"></span><span class="strut bottom" style="height:0.688696em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord">∗</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">conjugate complex</td>
+    </tr>
+   <tr id="#11">
+      <td style="text-align:right;">11</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$e_\alpha$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>α</mi></msub></mrow><annotation encoding="application/x-tex">e\_\\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit">e</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.0037em;">α</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">single block equation, greek index</td>
+    </tr>
+   <tr id="#12">
+      <td style="text-align:right;">12</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$1+1=2$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">display equation on its own single line.</td>
+    </tr>
+   <tr id="#13">
+      <td style="text-align:right;">13</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">${e}_x$
+
+$$e_\alpha$$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow><mi>e</mi></mrow><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">{e}\_x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord textstyle uncramped"><span class="mord mathit">e</span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">x</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq></p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>α</mi></msub></mrow><annotation encoding="application/x-tex">e\_\\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit">e</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.0037em;">α</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">inline equation followed by block equation.</td>
+    </tr>
+   <tr id="#14">
+      <td style="text-align:right;">14</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$c{\bold e}_x = a{\bold e}_\alpha - b\tilde{\bold e}_\alpha$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><msub><mrow><mi mathvariant="bold">e</mi></mrow><mi>x</mi></msub><mo>=</mo><mi>a</mi><msub><mrow><mi mathvariant="bold">e</mi></mrow><mi>α</mi></msub><mo>−</mo><mi>b</mi><msub><mover accent="true"><mrow><mi mathvariant="bold">e</mi></mrow><mo>~</mo></mover><mi>α</mi></msub></mrow><annotation encoding="application/x-tex">c{\\bold e}\_x = a{\\bold e}\_\\alpha - b\\tilde{\\bold e}\_\\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">c</span><span class="mord"><span class="mord displaystyle textstyle uncramped"><span class="mord mathbf">e</span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">x</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord mathit">a</span><span class="mord"><span class="mord displaystyle textstyle uncramped"><span class="mord mathbf">e</span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.0037em;">α</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">−</span><span class="mord mathit">b</span><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle cramped"><span class="mord mathbf">e</span></span></span><span style="top:-0.36344em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.0037em;">α</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">underline tests</td>
+    </tr>
+   <tr id="#15">
+      <td style="text-align:right;">15</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">a$1+1=2$
+$1+1=2$b
+c$x$d</td>
+      <td style="text-align:center;"><p>a<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq>
+<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq>b
+c<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span></eq>d</p>
+</td>
+      <td style="text-align:left;">non-numeric character before opening $ or
+after closing $ or both is allowed.</td>
+    </tr>
+   <tr id="#16">
+      <td style="text-align:right;">16</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$x$ $ </td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span></eq> $</p>
+</td>
+      <td style="text-align:left;">following dollar character '$' is allowed.</td>
+    </tr>
+   <tr id="#17">
+      <td style="text-align:right;">17</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$x$ $y$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span></eq> <eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">y</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">consecutive inline equations.</td>
+    </tr>
+   <tr id="#18">
+      <td style="text-align:right;">18</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$
+1+1=2
+$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">
+1+1=2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">display equation with line breaks.</td>
+    </tr>
+   <tr id="#19">
+      <td style="text-align:right;">19</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$\begin{matrix}
+ f & = & 2 + x + 3 \\
+ & = & 5 + x 
+\end{matrix}$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtable><mtr><mtd><mrow><mi>f</mi></mrow></mtd><mtd><mrow><mo>=</mo></mrow></mtd><mtd><mrow><mn>2</mn><mo>+</mo><mi>x</mi><mo>+</mo><mn>3</mn></mrow></mtd></mtr><mtr><mtd><mrow></mrow></mtd><mtd><mrow><mo>=</mo></mrow></mtd><mtd><mrow><mn>5</mn><mo>+</mo><mi>x</mi></mrow></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\\begin{matrix}
+ f &amp; = &amp; 2 + x + 3 \\\\
+ &amp; = &amp; 5 + x 
+\\end{matrix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.45em;"></span><span class="strut bottom" style="height:2.4000000000000004em;vertical-align:-0.9500000000000004em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mrel">=</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mrel">=</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathrm">2</span><span class="mbin">+</span><span class="mord mathit">x</span><span class="mbin">+</span><span class="mord mathrm">3</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathrm">5</span><span class="mbin">+</span><span class="mord mathit">x</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">multiline equation.</td>
+    </tr>
+   <tr id="#20">
+      <td style="text-align:right;">20</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$\begin{pmatrix}x_2 \\ y_2 \end{pmatrix} = 
+\begin{pmatrix} A & B \\ C & D \end{pmatrix}\cdot
+\begin{pmatrix} x_1 \\ y_1 \end{pmatrix}$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mo fence="true">(</mo><mtable><mtr><mtd><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>y</mi><mn>2</mn></msub></mrow></mtd></mtr></mtable><mo fence="true">)</mo></mrow><mo>=</mo><mrow><mo fence="true">(</mo><mtable><mtr><mtd><mrow><mi>A</mi></mrow></mtd><mtd><mrow><mi>B</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>C</mi></mrow></mtd><mtd><mrow><mi>D</mi></mrow></mtd></mtr></mtable><mo fence="true">)</mo></mrow><mo>⋅</mo><mrow><mo fence="true">(</mo><mtable><mtr><mtd><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>y</mi><mn>1</mn></msub></mrow></mtd></mtr></mtable><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\\begin{pmatrix}x\_2 \\\\ y\_2 \\end{pmatrix} = 
+\\begin{pmatrix} A &amp; B \\\\ C &amp; D \\end{pmatrix}\\cdot
+\\begin{pmatrix} x\_1 \\\\ y\_1 \\end{pmatrix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.45em;"></span><span class="strut bottom" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="base displaystyle textstyle uncramped"><span class="minner displaystyle textstyle uncramped"><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="mrel">=</span><span class="minner displaystyle textstyle uncramped"><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathit">A</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.07153em;">C</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.05017em;">B</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">D</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="mbin">⋅</span><span class="minner displaystyle textstyle uncramped"><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">1</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">1</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">vector equation.</td>
+    </tr>
+   <tr id="#21">
+      <td style="text-align:right;">21</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$f(x) = x^2 - 1$$ (1)</td>
+      <td style="text-align:center;"><section class="eqno"><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x) = x^2 - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8641079999999999em;"></span><span class="strut bottom" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span></span></eqn><span>(1)</span></section></td>
+      <td style="text-align:left;">display equation with equation number.</td>
+    </tr>
+   <tr id="#22">
+      <td style="text-align:right;">22</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">`code`$a-b$</td>
+      <td style="text-align:center;"><p><code>code</code><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>−</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a-b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span><span class="mbin">−</span><span class="mord mathit">b</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">inline equation following code section.</td>
+    </tr>
+   <tr id="#23">
+      <td style="text-align:right;">23</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">```
+code
+```
+$$a+b$$</td>
+      <td style="text-align:center;"><pre><code>code
+</code></pre>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">a</span><span class="mbin">+</span><span class="mord mathit">b</span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">equation following code block.</td>
+    </tr>
+   <tr id="#24">
+      <td style="text-align:right;">24</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">```
+code
+```
+$$a+b$$(1)</td>
+      <td style="text-align:center;"><pre><code>code
+</code></pre>
+<section class="eqno"><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit">a</span><span class="mbin">+</span><span class="mord mathit">b</span></span></span></span></span></eqn><span>(1)</span></section></td>
+      <td style="text-align:left;">numbered equation following code block.</td>
+    </tr>
+   <tr id="#25">
+      <td style="text-align:right;">25</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">1. $1+2$
+2. $2+3$
+    1. $3+4$</td>
+      <td style="text-align:center;"><ol>
+<li><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">2</span></span></span></span></eq></li>
+<li><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo>+</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2+3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mbin">+</span><span class="mord mathrm">3</span></span></span></span></eq>
+<ol>
+<li><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>+</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">3+4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mbin">+</span><span class="mord mathrm">4</span></span></span></span></eq></li>
+</ol>
+</li>
+</ol>
+</td>
+      <td style="text-align:left;">Equations in list.</td>
+    </tr>
+   <tr id="#26">
+      <td style="text-align:right;">26</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$\sum_{i=1}^n$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\\sum\_{i=1}^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.0500099999999999em;vertical-align:-0.30001em;"></span><span class="base textstyle uncramped"><span class="mop"><span class="op-symbol small-op mop" style="top:-0.0000050000000000050004em;">∑</span><span class="vlist"><span style="top:0.30001em;margin-left:0em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">i</span><span class="mrel">=</span><span class="mord mathrm">1</span></span></span></span><span style="top:-0.364em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit">n</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">Inline sum.</td>
+    </tr>
+   <tr id="#27">
+      <td style="text-align:right;">27</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$\sum_{i=1}^n$$</td>
+      <td style="text-align:center;"><section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\\sum\_{i=1}^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.6513970000000002em;"></span><span class="strut bottom" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="base displaystyle textstyle uncramped"><span class="mop op-limits"><span class="vlist"><span style="top:1.1776689999999999em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">i</span><span class="mrel">=</span><span class="mord mathrm">1</span></span></span></span><span style="top:-0.000005000000000143778em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span><span class="op-symbol large-op mop">∑</span></span></span><span style="top:-1.2500050000000003em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit">n</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></eqn></section></td>
+      <td style="text-align:left;">Sum without equation number.</td>
+    </tr>
+   <tr id="#28">
+      <td style="text-align:right;">28</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$$\sum_{i=1}^n$$ (2)</td>
+      <td style="text-align:center;"><section class="eqno"><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\\sum\_{i=1}^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.6513970000000002em;"></span><span class="strut bottom" style="height:2.929066em;vertical-align:-1.277669em;"></span><span class="base displaystyle textstyle uncramped"><span class="mop op-limits"><span class="vlist"><span style="top:1.1776689999999999em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">i</span><span class="mrel">=</span><span class="mord mathrm">1</span></span></span></span><span style="top:-0.000005000000000143778em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span><span class="op-symbol large-op mop">∑</span></span></span><span style="top:-1.2500050000000003em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit">n</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></eqn><span>(2)</span></section></td>
+      <td style="text-align:left;">Sum with equation number.</td>
+    </tr>
+   <tr id="#29">
+      <td style="text-align:right;">29</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">$${\bold e}(\varphi) = \begin{pmatrix}
+\cos\varphi\\\sin\varphi
+\end{pmatrix}$$ (3)</td>
+      <td style="text-align:center;"><section class="eqno"><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi mathvariant="bold">e</mi></mrow><mo>(</mo><mi>φ</mi><mo>)</mo><mo>=</mo><mrow><mo fence="true">(</mo><mtable><mtr><mtd><mrow><mi>cos</mi><mi>φ</mi></mrow></mtd></mtr><mtr><mtd><mrow><mi>sin</mi><mi>φ</mi></mrow></mtd></mtr></mtable><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">{\\bold e}(\\varphi) = \\begin{pmatrix}
+\\cos\\varphi\\\\\\sin\\varphi
+\\end{pmatrix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.45em;"></span><span class="strut bottom" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord displaystyle textstyle uncramped"><span class="mord mathbf">e</span></span><span class="mopen">(</span><span class="mord mathit">φ</span><span class="mclose">)</span><span class="mrel">=</span><span class="minner displaystyle textstyle uncramped"><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mop">cos</span><span class="mord mathit">φ</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mop">sin</span><span class="mord mathit">φ</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span></span></span></eqn><span>(3)</span></section></td>
+      <td style="text-align:left;">equation number always vertically aligned.</td>
+    </tr>
+   <tr id="#30">
+      <td style="text-align:right;">30</td>
+      <td style="text-align:center;">&#128522;</td>
+      <td style="text-align:left;">> see $a = b + c$ 
+> $c^2=a^2+b^2$ (2) 
+> $c^2=a^2+b^2$ </td>
+      <td style="text-align:center;"><blockquote>
+<p>see <eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>b</mi><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">a = b + c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span><span class="mrel">=</span><span class="mord mathit">b</span><span class="mbin">+</span><span class="mord mathit">c</span></span></span></span></eq>
+<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>c</mi><mn>2</mn></msup><mo>=</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">c^2=a^2+b^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">c</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">b</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq> (2)
+<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>c</mi><mn>2</mn></msup><mo>=</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">c^2=a^2+b^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">c</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">b</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></eq></p>
+</blockquote>
+</td>
+      <td style="text-align:left;">inline equations in blockquote.</td>
+    </tr>
+   <tr id="#31">
+      <td style="text-align:right;">31</td>
+      <td style="text-align:center;">&#128545;</td>
+      <td style="text-align:left;">3$1+1=2$
+$1+1=2$4
+5$x$6</td>
+      <td style="text-align:center;"><p>3<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq>
+<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq>4
+5<eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span></eq>6</p>
+</td>
+      <td style="text-align:left;">numeric character before opening $ or
+after closing $ is not allowed.</td>
+    </tr>
+   <tr id="#32">
+      <td style="text-align:right;">32</td>
+      <td style="text-align:center;">&#128545;</td>
+      <td style="text-align:left;">$ $
+$ x$
+$x $</td>
+      <td style="text-align:center;"><p>$ $
+$ x$
+$x $</p>
+</td>
+      <td style="text-align:left;">whitespace character after opening $
+or before closing $ is not allowed.</td>
+    </tr>
+   <tr id="#33">
+      <td style="text-align:right;">33</td>
+      <td style="text-align:center;">&#128545;</td>
+      <td style="text-align:left;">\$1+1=2$
+$1+1=2\$</td>
+      <td style="text-align:center;"><p>$1+1=2$
+$1+1=2$</p>
+</td>
+      <td style="text-align:left;">escaped dollars '\$' are interpreted as
+dollar '$' characters.</td>
+    </tr>
+   <tr id="#34">
+      <td style="text-align:right;">34</td>
+      <td style="text-align:center;">&#128545;</td>
+      <td style="text-align:left;">$1+1=2$$1+1=2$</td>
+      <td style="text-align:center;"><p><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq><eq><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mbin">+</span><span class="mord mathrm">1</span><span class="mrel">=</span><span class="mord mathrm">2</span></span></span></span></eq></p>
+</td>
+      <td style="text-align:left;">at least one character (whitespace) is required
+between two inline formulas.</td>
+    </tr>
+   <tr id="#35">
+      <td style="text-align:right;">35</td>
+      <td style="text-align:center;">&#128545;</td>
+      <td style="text-align:left;">$1+1=
+2$</td>
+      <td style="text-align:center;"><p>$1+1=
+2$</p>
+</td>
+      <td style="text-align:left;">line break in inline equation is not allowed.</td>
+    </tr>
+
+      </thead>
+      <tbody id="rows">
+      </tbody>
+    </table>
+  </body>
+</html>
