@@ -5,7 +5,7 @@ const md = require('markdown-it')();
 const rules = {
     inline: [ 
         {   name: 'math_inline',
-            rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
+            rex: /\$\$?(\S[^$\r\n]*?[^\s\\]{1}?)\$\$?/gy,
             tmpl: '<eq>$1</eq>',
             tag: '$'
         },
@@ -32,7 +32,7 @@ const rules = {
 function texmath(md, options) {
 //    let inlineDelimiter = texmath.delimiters[options && options.delimiter && options.delimiter.inline] || texmath.delimiters['$'],
 //        blockDelimiter = texmath.delimiters[options && options.delimiter && options.delimiter.block] || texmath.delimiters['$$'];
-
+console.log("§")
     for (let rule of rules.inline) {
         md.inline.ruler.push(rule.name, texmath.inline(rule));
         md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false));
