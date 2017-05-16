@@ -4,7 +4,7 @@ const md = require('markdown-it')();
 
 const rules = {
     inline: [ 
-        {   name: 'math_inline',
+        {   name: 'math_inline',   // even accept inline $$...$$ formulas
             rex: /\$\$?(\S[^$\r\n]*?[^\s\\]{1}?)\$\$?/gy,
             tmpl: '<eq>$1</eq>',
             tag: '$'
@@ -46,12 +46,15 @@ console.log("§")
 }
 
 texmath.searchInlineMath = function(state, rule) {
-    let match, eor;
-    rule.rex.lastIndex = state.pos;
-    match = rule.rex.exec(state.src);
-    eor = rule.rex.lastIndex;  // end of rule ...
-    rule.rex.lastIndex = 0;
-    return match && { match: match[1], from: match.index, to: eor } || false;
+    let found = state.src.indexOf(rule.tag, state.pos || 0), 
+        match = found >= 0;
+    if (match) {
+       rule.rex.lastIndex = found;
+       match = rule.rex.exec(state.src);
+       match = match && { match: match[1], from: match.index, to: rule.rex.lastIndex } || false;
+       rule.rex.lastIndex = 0;
+    }
+    return match;
 }
 
 texmath.searchBlockMath = function(state, rule, begLine) {

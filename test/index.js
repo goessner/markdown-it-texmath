@@ -13,7 +13,7 @@ const html = (content) => `<!DOCTYPE html>
     <title>Markdown+Math Debug Test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.4.1/github-markdown.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
-    <link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/mdmath/master/css/mdmath.css">
+    <link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/markdown-it-texmath/master/css/texmath.css">
     <style>
        body {
           color: darkslategray;
