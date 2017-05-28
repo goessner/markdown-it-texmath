@@ -22,7 +22,7 @@ This extension is a comfortable tool for scientists, engineers and students with
 
 ## Use with `node.js`
 
-Install the extension.
+Install the extension. Verify having `markdown-it` and `katex` already installed .
 ```
 npm install markdown-it-texmath
 ```
@@ -51,7 +51,7 @@ md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.')
   <script>
     let md, kt, tm;
     document.addEventListener("DOMContentLoaded", () => {
-        kt = katex,
+        kt = katex;
         tm = texmath;
         md = markdownit().use(tm);
         out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.');
