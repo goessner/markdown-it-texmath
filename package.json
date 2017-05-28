@@ -1,7 +1,7 @@
 {
   "name": "markdown-it-texmath",
-  "version": "0.3.3",
-  "description": "markdown-it plugin for rendering TeX Math",
+  "version": "0.3.4",
+  "description": "markdown-it extension for rendering TeX Math",
   "keywords": [
     "TeX",
     "LaTeX",
