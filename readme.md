@@ -72,11 +72,11 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## ToDo
 
-* Allow additional math delimiter.
+* Allow additional math delimiters.
 * Integrate `markdown-it-texmath` into [`mdmath`](https://github.com/goessner/mdmath).
 
 ## License
 
-*Markdown+Math* for VS Code is licensed under the [MIT License](./license.txt)
+`markdown-it-texmath` is licensed under the [MIT License](./license.txt)
 
  © [Stefan Gössner](https://github.com/goessner)
