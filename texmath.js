@@ -1,13 +1,5 @@
 'use strict';
 
-let kt, md;
-
-if (typeof require === "function") {
-    kt = require('katex');
-    md = require('markdown-it')();
-}
-console.log("kt="+kt);
-
 const rules = {
     inline: [ 
         {   name: 'math_inline',   // even accept inline $$...$$ formulas ... no, don't !!! (deprecated)
@@ -39,8 +31,8 @@ function texmath(md, options) {
 //    let inlineDelimiter = texmath.delimiters[options && options.delimiter && options.delimiter.inline] || texmath.delimiters['$'],
 //        blockDelimiter = texmath.delimiters[options && options.delimiter && options.delimiter.block] || texmath.delimiters['$$'];
     for (let rule of rules.inline) {
-//        md.inline.ruler.push(rule.name, texmath.inline(rule));
-        md.inline.ruler.before('backticks', rule.name, texmath.inline(rule));
+        md.inline.ruler.push(rule.name, texmath.inline(rule));
+//        md.inline.ruler.before('backticks', rule.name, texmath.inline(rule));
         md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false));
     }
 
@@ -120,12 +112,17 @@ texmath.render = function(tex,isblock) {
     let res;
     try {
         // don't forget to escape '_','*', and '\' .. after math rendering
-        res = kt.renderToString(tex,{throwOnError:false,displayMode:isblock}).replace(/([_\*\\])/g, "\\$1");
+        res = texmath.katex.renderToString(tex,{throwOnError:false,displayMode:isblock}).replace(/([_\*\\])/g, "\\$1");
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");
     }
     return res;
+}
+
+texmath.use = function(katex) {  // math renderer used ...
+    texmath.katex = katex;       // ... katex solely at current ...
+    return texmath;
 }
 
 /*
