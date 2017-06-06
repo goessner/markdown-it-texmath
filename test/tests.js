@@ -128,21 +128,21 @@ const tests = [
   src: "> see $a = b + c$ \n> $c^2=a^2+b^2$ (2) \n> $c^2=a^2+b^2$ ",
   comment: "inline equations in blockquote."
 },
-{ valid: false,
-  src: "3$1+1=2$\n$1+1=2$4\n5$x$6",
-  comment: "numeric character before opening $ or\nafter closing $ is not allowed."
+{ valid: true,
+  src: "> formula\n>\n> $$ a+b=c$$ (2)\n>\n> in blockquote. ",
+  comment: "display equation in blockquote."
 },
-{ valid: false,
-  src: "$ $\n$ x$\n$x $",
-  comment: "whitespace character after opening $\nor before closing $ is not allowed."
-},
-{ valid: false,
+{ valid: true,
   src: "\\$1+1=2$\n$1+1=2\\$",
   comment: "escaped dollars '\\$' are interpreted as\ndollar '$' characters."
 },
 { valid: false,
-  src: "$1+1=2$$1+1=2$",
-  comment: "at least one character (whitespace) is required\nbetween two inline formulas."
+  src: "some text\n \$\\$a+b=c\$\$",
+  comment: "empty line between text and display formula is required."
+},
+{ valid: false,
+  src: "$ $\n$ x$\n$x $",
+  comment: "whitespace character after opening $\nor before closing $ is not allowed."
 },
 { valid: false,
   src: "$1+1=\n2$",

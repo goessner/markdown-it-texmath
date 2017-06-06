@@ -18,7 +18,9 @@ This extension is a comfortable tool for scientists, engineers and students with
 
 ## Show me 
 
-[try ...](https://goessner.github.io/markdown-it-texmath/markdown-it-texmath-demo.html)
+View a [test table](https://goessner.github.io/markdown-it-texmath/index.html)
+
+[try it our ...](https://goessner.github.io/markdown-it-texmath/markdown-it-texmath-demo.html)
 
 ## Use with `node.js`
 

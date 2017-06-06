@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const kt = require('katex');
-const tm = require('../texmath.js');
+const tm = require('../texmath.js').use(kt);
 const md = require('markdown-it')({html:true}).use(tm);
 const tests = require('./tests.js');
 
@@ -10,10 +10,10 @@ const html = (content) => `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Markdown+Math Debug Test</title>
+    <title>markdown-it-texmath Tests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.4.1/github-markdown.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
-    <link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/markdown-it-texmath/master/css/texmath.css">
+    <link rel="stylesheet" href="https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/css/texmath.css">
     <style>
        body {
           color: darkslategray;
@@ -35,7 +35,7 @@ const html = (content) => `<!DOCTYPE html>
     </style>
   </head>
   <body>
-    <h1>Markdown+Math Tests</h1>
+    <h1>markdown-it-texmath Tests</h1>
     <table id="test-table" style="table-layout:fixed; border:solid black 1px; border-collapse: collapse; max-width:100%;">
       <thead>
         <tr>
@@ -57,7 +57,7 @@ const row = (i, valid, src, comment) =>
       <td style="text-align:right;">${i}</td>
       <td style="text-align:center;">${valid ? "&#128522;" : "&#128545;"}</td>
       <td style="text-align:left;">${src.replace("<","&lt;")}</td>
-      <td style="text-align:center;">${md.render(src)}</td>
+      <td style="text-align:left;">${md.render(src)}</td>
       <td style="text-align:left;">${comment}</td>
     </tr>
 `;
