@@ -7,8 +7,8 @@ if (typeof require === "function") {
 
 const rules = {
     inline: [ 
-        {   name: 'math_inline',   // even accept inline $$...$$ formulas
-            rex: /\$\$?(\S[^$\r\n]*?[^\s\\]{1}?)\$\$?/gy,
+        {   name: 'math_inline',   // even accept inline $$...$$ formulas ... no, don't !!! (deprecated)
+            rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
             tmpl: '<eq>$1</eq>',
             tag: '$'
         },
@@ -36,7 +36,8 @@ function texmath(md, options) {
 //    let inlineDelimiter = texmath.delimiters[options && options.delimiter && options.delimiter.inline] || texmath.delimiters['$'],
 //        blockDelimiter = texmath.delimiters[options && options.delimiter && options.delimiter.block] || texmath.delimiters['$$'];
     for (let rule of rules.inline) {
-        md.inline.ruler.push(rule.name, texmath.inline(rule));
+//        md.inline.ruler.push(rule.name, texmath.inline(rule));
+        md.inline.ruler.before('backticks', rule.name, texmath.inline(rule));
         md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false));
     }
 
@@ -48,10 +49,10 @@ function texmath(md, options) {
 }
 
 texmath.searchInlineMath = function(state, rule) {
-    let found = state.src.indexOf(rule.tag, state.pos || 0), 
-        match = found >= 0;
-    if (match) {
-       rule.rex.lastIndex = found;
+    let found = state.src.indexOf(rule.tag, state.pos) === state.pos, // => state.src.startsWith(rule.tag)
+        match;
+    if (found) {
+       rule.rex.lastIndex = state.pos;
        match = rule.rex.exec(state.src);
        match = match && { match: match[1], from: match.index, to: rule.rex.lastIndex } || false;
        rule.rex.lastIndex = 0;
@@ -78,6 +79,8 @@ texmath.searchBlockMath = function(state, rule, begLine) {
     return false;
 }
 
+// texmath.inline = (rule) => dollar;
+
 texmath.inline = (rule) => 
     function(state, silent) {
         let res = texmath.searchInlineMath(state, rule);
@@ -86,9 +89,9 @@ texmath.inline = (rule) =>
                 let token = state.push(rule.name, 'math', 0);
                 token.content = res.match;
                 token.markup = '$';
+//        console.log('found inlineMath ' + token.content + ' in: '+state.src)
             }
             state.pos = res.to;
-//        console.log('found inlineMath in: '+state.src)
         }
         return !!res;
     }
@@ -109,7 +112,7 @@ texmath.block = (rule) =>
         }
         return !!res;
     }
-    
+
 texmath.render = function(tex,isblock) {
     let res;
     try {
@@ -121,6 +124,48 @@ texmath.render = function(tex,isblock) {
     }
     return res;
 }
+
+/*
+function dollar(state, silent) {
+  var start, max, marker, matchStart, matchEnd, token,
+      pos = state.pos,
+      ch = state.src.charCodeAt(pos);
+
+  if (ch !== 0x24) { return false; }  // $
+
+  start = pos;
+  pos++;
+  max = state.posMax;
+
+  while (pos < max && state.src.charCodeAt(pos) === 0x24) { pos++; }
+
+  marker = state.src.slice(start, pos);
+
+  matchStart = matchEnd = pos;
+
+  while ((matchStart = state.src.indexOf('$', matchEnd)) !== -1) {
+    matchEnd = matchStart + 1;
+
+    while (matchEnd < max && state.src.charCodeAt(matchEnd) === 0x24) { matchEnd++; }
+
+    if (matchEnd - matchStart === marker.length) {
+      if (!silent) {
+        token         = state.push('math_inline', 'math', 0);
+        token.markup  = marker;
+        token.content = state.src.slice(pos, matchStart)
+                                 .replace(/[ \n]+/g, ' ')
+                                 .trim();
+      }
+      state.pos = matchEnd;
+      return true;
+    }
+  }
+
+  if (!silent) { state.pending += marker; }
+  state.pos += marker.length;
+  return true;
+};
+*/
 
 if (typeof module === "object" && module.exports)
    module.exports = texmath;

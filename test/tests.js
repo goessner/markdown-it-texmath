@@ -73,6 +73,10 @@ const tests = [
   comment: "consecutive inline equations."
 },
 { valid: true,
+  src: "so-what is $x$",
+  comment: "inline equation after '-' sign in text."
+},
+{ valid: true,
   src: "$$\n1+1=2\n$$",
   comment: "display equation with line breaks."
 },
