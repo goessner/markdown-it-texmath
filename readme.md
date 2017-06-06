@@ -18,7 +18,7 @@ This extension is a comfortable tool for scientists, engineers and students with
 
 ## Show me 
 
-View a [test table](https://goessner.github.io/markdown-it-texmath/index.html)
+View a [test table](https://goessner.github.io/markdown-it-texmath/index.html).
 
 [try it our ...](https://goessner.github.io/markdown-it-texmath/markdown-it-texmath-demo.html)
 
@@ -30,7 +30,8 @@ npm install markdown-it-texmath
 ```
 Use it with JavaScript.
 ```js
-let tm = require('markdown-it-texmath'),
+let kt = require('katex'),
+    tm = require('markdown-it-texmath').use(kt),
     md = require('markdown-it')().use(tm);
 
 md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.')
@@ -41,7 +42,6 @@ md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.')
 <html>
 <head>
   <meta charset='utf-8'>
-  <link rel="stylesheet" href="github-markdown.min.css">
   <link rel="stylesheet" href="katex.min.css">
   <link rel="stylesheet" href="texmath.css">
   <script src="markdown-it.min.js"></script>
@@ -49,12 +49,11 @@ md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.')
   <script src="texmath.js"></script>
 </head>
 <body>
-  <div id="out" class="markdown-body"></div>
+  <div id="out"></div>
   <script>
-    let md, kt, tm;
+    let md;
     document.addEventListener("DOMContentLoaded", () => {
-        kt = katex;
-        tm = texmath;
+        const tm = texmath.use(katex);
         md = markdownit().use(tm);
         out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.');
   </script>
