@@ -1,9 +1,12 @@
 'use strict';
 
+let kt, md;
+
 if (typeof require === "function") {
-    const kt = require('katex');
-    const md = require('markdown-it')();
+    kt = require('katex');
+    md = require('markdown-it')();
 }
+console.log("kt="+kt);
 
 const rules = {
     inline: [ 
