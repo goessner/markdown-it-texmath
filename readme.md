@@ -10,9 +10,7 @@ Add TeX math equations to your Markdown documents rendered by [markdown-it](http
 Simplify the process of authoring markdown documents containing math formulas.
 This extension is a comfortable tool for scientists, engineers and students with markdown as their first choice document format.
 
-* Inline math by `$ ... $`
-* Display math by `$$ ... $$`
-* Add formula numbering by `$$ ... $$ (1)`
+* Simple formula numbering
 * Inline math with tables, lists and blockquote.
 * User setting delimiters:
   * `'dollars'` (default)
@@ -23,6 +21,10 @@ This extension is a comfortable tool for scientists, engineers and students with
     * inline: `\(...\)`
     * display: `\[...\]`
     * display + equation number: `\[...\] (1)`
+  * `'gitlab'`
+    * inline: ``$`...`$``
+    * display: `` ```math ... ``` ``
+    * display + equation number: `` ```math ... ``` (1)``
 
 ## Show me 
 

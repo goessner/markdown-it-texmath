@@ -13,7 +13,7 @@ function texmath(md, options) {
     }
 
     for (let rule of texmath.rules[delimiters].block) {
-        md.block.ruler.before('blockquote', rule.name, texmath.block(rule));
+        md.block.ruler.before('fence', rule.name, texmath.block(rule));
         md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
                                                                  .replace(/\$1/,texmath.render(tokens[idx].content,true));
     }
@@ -29,6 +29,7 @@ texmath.applyRule = function(rule, str, beg) {
         post = !rule.post || rule.post(str, match.lastIndex-1);
     }
     rule.rex.lastIndex = 0;
+    if (post && match) console.log("found: "+match)
     return post && match;
 }
 
@@ -158,6 +159,27 @@ texmath.rules = {
                 rex: /\\\[(.+?)\\\]/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '\\['
+            }
+        ]
+    },
+    gitlab: {
+        inline: [ 
+            {   name: 'math_inline',
+                rex: /\$`(.+?)`\$/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$`'
+            }
+        ],
+        block: [ 
+            {   name: 'math_block_eqno',
+                rex: /`{3}math\s+?(.+?)\s+?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
+                tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
+                tag: '```math'
+            },
+            {   name: 'math_block',
+                rex: /`{3}math\s+?(.+?)\s+?`{3}/gmy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '```math'
             }
         ]
     },
