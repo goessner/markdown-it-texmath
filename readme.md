@@ -14,7 +14,15 @@ This extension is a comfortable tool for scientists, engineers and students with
 * Display math by `$$ ... $$`
 * Add formula numbering by `$$ ... $$ (1)`
 * Inline math with tables, lists and blockquote.
-
+* User setting delimiters:
+  * `'dollars'` (default)
+    * inline: `$...$`
+    * display: `$$...$$`
+    * display + equation number: `$$...$$ (1)`
+  * `'brackets'`
+    * inline: `\(...\)`
+    * display: `\[...\]`
+    * display + equation number: `\[...\] (1)`
 
 ## Show me 
 
@@ -32,9 +40,9 @@ Use it with JavaScript.
 ```js
 let kt = require('katex'),
     tm = require('markdown-it-texmath').use(kt),
-    md = require('markdown-it')().use(tm);
+    md = require('markdown-it')().use(tm,{delimiters:'brackets'});
 
-md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.')
+md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula.')
 ```
 
 ## Use in Browser
@@ -73,7 +81,6 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## ToDo
 
-* Allow additional math delimiters.
 * Integrate `markdown-it-texmath` into [`mdmath`](https://github.com/goessner/mdmath).
 
 ## License
