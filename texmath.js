@@ -31,7 +31,7 @@ texmath.applyRule = function(rule, str, beg) {
         post = !rule.post || rule.post(str, match.lastIndex-1);
     }
     rule.rex.lastIndex = 0;
-    if (post && match) console.log("found: "+match)
+//    if (post && match) console.log("found: "+match)
     return post && match;
 }
 
