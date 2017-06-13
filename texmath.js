@@ -7,15 +7,17 @@
 function texmath(md, options) {
     let delimiters = options && options.delimiters || 'dollars';
 
-    for (let rule of texmath.rules[delimiters].inline) {
-        md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false));
-    }
+    if (delimiters in texmath.rules) {
+        for (let rule of texmath.rules[delimiters].inline) {
+            md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
+            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false));
+        }
 
-    for (let rule of texmath.rules[delimiters].block) {
-        md.block.ruler.before('fence', rule.name, texmath.block(rule));
-        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
-                                                                 .replace(/\$1/,texmath.render(tokens[idx].content,true));
+        for (let rule of texmath.rules[delimiters].block) {
+            md.block.ruler.before('fence', rule.name, texmath.block(rule));
+            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
+                                                                    .replace(/\$1/,texmath.render(tokens[idx].content,true));
+        }
     }
 }
 
