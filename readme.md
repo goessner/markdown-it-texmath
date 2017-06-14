@@ -66,6 +66,7 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula.')
         const tm = texmath.use(katex);
         md = markdownit().use(tm);
         out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.');
+    }
   </script>
 </body>
 </html>
