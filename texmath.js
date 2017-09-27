@@ -16,7 +16,7 @@ function texmath(md, options) {
         for (let rule of texmath.rules[delimiters].block) {
             md.block.ruler.before('fence', rule.name, texmath.block(rule));
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
-                                                                    .replace(/\$1/,texmath.render(tokens[idx].content,true));
+                                                                     .replace(/\$1/,texmath.render(tokens[idx].content,true));
         }
     }
 }
@@ -77,7 +77,8 @@ texmath.render = function(tex,isblock) {
     let res;
     try {
         // don't forget to escape '_','*', and '\' .. after math rendering .. test if necessary .. !
-        res = texmath.katex.renderToString(tex,{throwOnError:false,displayMode:isblock}).replace(/([_\*\\])/g, "\\$1");
+//console.log('texmath.katex: '+texmath.katex)
+        res = texmath.katex.renderToString(tex,{throwOnError:true,displayMode:isblock}).replace(/([_\*\\])/g, "\\$1");
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");
@@ -174,12 +175,12 @@ texmath.rules = {
         ],
         block: [ 
             {   name: 'math_block_eqno',
-                rex: /`{3}math\s+?(.+?)\s+?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /`{3}math\s+?([^`]+?)\s+?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '```math'
             },
             {   name: 'math_block',
-                rex: /`{3}math\s+?(.+?)\s+?`{3}/gmy,
+                rex: /`{3}math\s+?([^`]+?)\s+?`{3}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '```math'
             }
