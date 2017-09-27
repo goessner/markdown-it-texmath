@@ -84,7 +84,12 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## ToDo
 
-* Integrate `markdown-it-texmath` into [`mdmath`](https://github.com/goessner/mdmath).
+ nothing yet
+
+## CHANGELOG
+
+###  [0.4.4] on September 27, 2017
+* Modifying the `block` mode regular expression with `gitlab` delimiters, so removing the `newline` bug.
 
 ## License
 
