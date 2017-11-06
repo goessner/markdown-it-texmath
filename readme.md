@@ -88,6 +88,9 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## CHANGELOG
 
+###  [0.4.5] on November 06, 2017
+* Backslash bug removed.
+
 ###  [0.4.4] on September 27, 2017
 * Modifying the `block` mode regular expression with `gitlab` delimiters, so removing the `newline` bug.
 

@@ -76,9 +76,9 @@ texmath.block = (rule) =>
 texmath.render = function(tex,isblock) {
     let res;
     try {
-        // don't forget to escape '_','*', and '\' .. after math rendering .. test if necessary .. !
-//console.log('texmath.katex: '+texmath.katex)
-        res = texmath.katex.renderToString(tex,{throwOnError:true,displayMode:isblock}).replace(/([_\*\\])/g, "\\$1");
+        // don't forget to escape '_','*' .. after math rendering .. test if necessary .. !
+//  console.log('tex: '+tex)
+        res = texmath.katex.renderToString(tex,{throwOnError:true,displayMode:isblock}).replace(/([_*])/g, "\\$1");
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");

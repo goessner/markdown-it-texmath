@@ -17,6 +17,10 @@ const tests = [
   comment: "simple equation including special html character."
 },
 { valid: true,
+  src: "$a \\backslash$",
+  comment: "equation including backslashes."
+},
+{ valid: true,
   src: "You get 3$ if you solve $1+2$",
   comment: "use of currency symbol"
 },
