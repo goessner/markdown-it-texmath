@@ -11,8 +11,7 @@ const html = (content) => `<!DOCTYPE html>
   <head>
     <meta charset="UTF-8">
     <title>markdown-it-texmath Tests</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.4.1/github-markdown.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css"> <!-- version is necessary here -->
     <link rel="stylesheet" href="https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/css/texmath.css">
     <style>
        body {

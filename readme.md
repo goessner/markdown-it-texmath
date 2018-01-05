@@ -88,6 +88,9 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## CHANGELOG
 
+###  [0.4.6] on November 06, 2017
+* Escaped underscore bug removed.
+
 ###  [0.4.5] on November 06, 2017
 * Backslash bug removed.
 

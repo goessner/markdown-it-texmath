@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Stefan Goessner - 2017. All rights reserved.
+ *  Copyright (c) Stefan Goessner - 2017-18. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
@@ -76,9 +76,7 @@ texmath.block = (rule) =>
 texmath.render = function(tex,isblock) {
     let res;
     try {
-        // don't forget to escape '_','*' .. after math rendering .. test if necessary .. !
-//  console.log('tex: '+tex)
-        res = texmath.katex.renderToString(tex,{throwOnError:true,displayMode:isblock}).replace(/([_*])/g, "\\$1");
+        res = texmath.katex.renderToString(tex,{throwOnError:true,displayMode:isblock}); //.replace(/([_*])/g, "\\$1"); // escaped underscore bug ...
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");
