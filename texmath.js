@@ -76,7 +76,7 @@ texmath.block = (rule) =>
 texmath.render = function(tex,isblock) {
     let res;
     try {
-        res = texmath.katex.renderToString(tex,{throwOnError:true,displayMode:isblock}); //.replace(/([_*])/g, "\\$1"); // escaped underscore bug ...
+        res = texmath.katex.renderToString(tex,{throwOnError:false,displayMode:isblock}); //.replace(/([_*])/g, "\\$1"); // escaped underscore bug ...
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");
