@@ -152,12 +152,12 @@ texmath.rules = {
         ],
         block: [ 
             {   name: 'math_block_eqno',
-                rex: /\\\[\s*?(.+?)\\\]\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /\\\[\s*?([\s\S]+?)\\\]\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '\\['
             },
             {   name: 'math_block',
-                rex: /\\\[(.+?)\\\]/gmy,
+                rex: /\\\[([\s\S]+?)\\\]/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '\\['
             }
