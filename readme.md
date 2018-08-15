@@ -88,6 +88,9 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## CHANGELOG
 
+###  [0.5.0] on August 15, 2018
+* Fatal blockquote bug investigated. Implemented workaround to vscode bug, which has finally gone with vscode 1.26.0 .
+
 ###  [0.4.6] on January 05, 2018
 * Escaped underscore bug removed.
 

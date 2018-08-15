@@ -24,6 +24,8 @@ function texmath(md, options) {
 texmath.applyRule = function(rule, str, beg) {
     let pre, match, post;
     rule.rex.lastIndex = beg;
+
+console.log('applyRule('+rule.name+'):'+str[beg])
     pre = str.startsWith(rule.tag,beg) && (!rule.pre || rule.pre(str,beg));
     match = pre && rule.rex.exec(str);
     if (match) {
@@ -201,7 +203,17 @@ texmath.rules = {
                 post: texmath.$_post
             }
         ],
-        block: [ 
+        block: [
+            //  catch invalid (crashing) case of (only) beginning block formula in blockquote
+            //  s. issue https://github.com/goessner/mdmath/issues/50
+            //  evil behavior is gone with vscode 1.26.0 !!!
+/*
+            {   name: 'math_block_blockquote_invalid',
+                rex: />[ \t]*\${2}[^$]+[\r\n]/gmy,
+                tmpl: '',  // intentionally do nothing
+                tag: '$$'
+            },
+*/
             {   name: 'math_block_eqno',
                 rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
