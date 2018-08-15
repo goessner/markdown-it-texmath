@@ -25,7 +25,6 @@ texmath.applyRule = function(rule, str, beg) {
     let pre, match, post;
     rule.rex.lastIndex = beg;
 
-console.log('applyRule('+rule.name+'):'+str[beg])
     pre = str.startsWith(rule.tag,beg) && (!rule.pre || rule.pre(str,beg));
     match = pre && rule.rex.exec(str);
     if (match) {
@@ -33,11 +32,11 @@ console.log('applyRule('+rule.name+'):'+str[beg])
         post = !rule.post || rule.post(str, match.lastIndex-1);
     }
     rule.rex.lastIndex = 0;
-//    if (post && match) console.log("found: "+match)
+
     return post && match;
 }
 
-// texmath.inline = (rule) => dollar;
+// texmath.inline = (rule) => dollar;  // just for testing ..
 
 texmath.inline = (rule) => 
     function(state, silent) {
@@ -70,7 +69,6 @@ texmath.block = (rule) =>
                     break;
                 }
             state.pos = res.lastIndex;
-//console.log(`endlL=${state.line}, pos=${res.lastIndex}`)
         }
         return !!res;
     }
