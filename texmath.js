@@ -184,6 +184,27 @@ texmath.rules = {
             }
         ]
     },
+    kramdown: {
+        inline: [ 
+            {   name: 'math_inline', 
+                rex: /\${2}([^$\r\n]*?)\${2}/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$$'
+            }
+        ],
+        block: [
+            {   name: 'math_block_eqno',
+                rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
+                tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
+                tag: '$$'
+            },
+            {   name: 'math_block',
+                rex: /\${2}([^$]*?)\${2}/gmy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '$$'
+            }
+        ]
+    },
     dollars: {
         inline: [ 
             {   name: 'math_inline', 
@@ -202,16 +223,6 @@ texmath.rules = {
             }
         ],
         block: [
-            //  catch invalid (crashing) case of (only) beginning block formula in blockquote
-            //  s. issue https://github.com/goessner/mdmath/issues/50
-            //  evil behavior is gone with vscode 1.26.0 !!!
-/*
-            {   name: 'math_block_blockquote_invalid',
-                rex: />[ \t]*\${2}[^$]+[\r\n]/gmy,
-                tmpl: '',  // intentionally do nothing
-                tag: '$$'
-            },
-*/
             {   name: 'math_block_eqno',
                 rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
@@ -223,7 +234,7 @@ texmath.rules = {
                 tag: '$$'
             }
         ]
-    },
+    }
 };
 
 if (typeof module === "object" && module.exports)

@@ -25,6 +25,10 @@ This extension is a comfortable tool for scientists, engineers and students with
     * inline: ``$`...`$``
     * display: `` ```math ... ``` ``
     * display + equation number: `` ```math ... ``` (1)``
+  * `'kramdown'`
+    * inline: ``$$...$$``
+    * display: `$$...$$`
+    * display + equation number: `$$...$$ (1)`
 
 ## Show me 
 
@@ -87,6 +91,9 @@ Use following links for `texmath.js` and `texmath.css`
  nothing yet
 
 ## CHANGELOG
+
+###  [0.5.2] on September 07, 2018
+* Add support for [Kramdown](https://kramdown.gettalong.org/) .
 
 ###  [0.5.0] on August 15, 2018
 * Fatal blockquote bug investigated. Implemented workaround to vscode bug, which has finally gone with vscode 1.26.0 .
