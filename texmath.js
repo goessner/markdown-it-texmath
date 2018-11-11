@@ -4,19 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 
-function texmath(md, options) {
-    let delimiters = options && options.delimiters || 'dollars';
+function texmath(md,options) {
+    let delimiters = options && options.delimiters || 'dollars',
+        macros = options && options.macros;
 
     if (delimiters in texmath.rules) {
         for (let rule of texmath.rules[delimiters].inline) {
             md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false));
+            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false,macros));
         }
 
         for (let rule of texmath.rules[delimiters].block) {
             md.block.ruler.before('fence', rule.name, texmath.block(rule));
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
-                                                                     .replace(/\$1/,texmath.render(tokens[idx].content,true));
+                                                                     .replace(/\$1/,texmath.render(tokens[idx].content,true,macros));
         }
     }
 }
@@ -73,10 +74,10 @@ texmath.block = (rule) =>
         return !!res;
     }
 
-texmath.render = function(tex,isblock) {
+texmath.render = function(tex,displayMode,macros) {
     let res;
     try {
-        res = texmath.katex.renderToString(tex,{throwOnError:false,displayMode:isblock}); //.replace(/([_*])/g, "\\$1"); // escaped underscore bug ...
+        res = texmath.katex.renderToString(tex,{throwOnError:false,displayMode,macros});
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");

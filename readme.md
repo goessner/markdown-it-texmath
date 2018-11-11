@@ -10,6 +10,7 @@ Add TeX math equations to your Markdown documents rendered by [markdown-it](http
 Simplify the process of authoring markdown documents containing math formulas.
 This extension is a comfortable tool for scientists, engineers and students with markdown as their first choice document format.
 
+* Macro support
 * Simple formula numbering
 * Inline math with tables, lists and blockquote.
 * User setting delimiters:
@@ -46,9 +47,9 @@ Use it with JavaScript.
 ```js
 let kt = require('katex'),
     tm = require('markdown-it-texmath').use(kt),
-    md = require('markdown-it')().use(tm,{delimiters:'brackets'});
+    md = require('markdown-it')().use(tm,{delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
 
-md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula.')
+md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$.')
 ```
 
 ## Use in Browser
@@ -69,7 +70,7 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula.')
     document.addEventListener("DOMContentLoaded", () => {
         const tm = texmath.use(katex);
         md = markdownit().use(tm);
-        out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula.');
+        out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in //RR 2.');
     })
   </script>
 </body>
@@ -91,6 +92,9 @@ Use following links for `texmath.js` and `texmath.css`
  nothing yet
 
 ## CHANGELOG
+
+###  [0.5.3] on November 11, 2018
+* Add support for Tex macros (https://katex.org/docs/supported.html#macros) .
 
 ###  [0.5.2] on September 07, 2018
 * Add support for [Kramdown](https://kramdown.gettalong.org/) .
