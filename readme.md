@@ -69,7 +69,7 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
     let md;
     document.addEventListener("DOMContentLoaded", () => {
         const tm = texmath.use(katex);
-        md = markdownit().use(tm);
+        md = markdownit().use(tm,{delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
         out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in //RR 2.');
     })
   </script>

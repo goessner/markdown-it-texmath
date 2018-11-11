@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/mdmath/master/css/texmath.css">
+  <link rel="stylesheet" href="https://gitcdn.xyz/repo/goessner/mdmath/master/css/vscode-texmath.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script src="../texmath.js"></script>
+</head>
+<body>
+  <div id="out"></div>
+  <script>
+    let md;
+    const macros = {
+        "\\RR": "\\mathbb{R}",
+        "\\oops": "{this is #1 oops}"
+    },
+    str = `# Triangle
+Let the right triangle hypothenuse be aligned with the coordinate system *x-axis*.
+The vector loop closure equation then reads
+
+\\\[
+a{\\bold e}_\\alpha + b\\tilde{\\bold e}_\\alpha + c{\\bold e}_x = \\bold 0
+\\\] (1)
+
+with
+
+\\\[
+{\\bold e}_\\alpha = \\begin{pmatrix}\\cos\\alpha\\\\ \\sin\\alpha\\end{pmatrix} \\quad and \\quad {\\tilde\\bold e}_\\alpha = \\begin{pmatrix}-\\sin\\alpha\\\\ \\cos\\alpha\\end{pmatrix}
+\\\]
+
+Resolving for the hypothenuse part \\\(c{\\bold e}_x\\\) in the loop closure equation (1) 
+
+\\\[
+-c{\\bold e}_x = a{\\bold e}_\\alpha + b\\tilde{\\bold e}_\\alpha
+\\\] (2)
+
+and squaring 
+
+finally results in the Pythagorean theorem (2)
+
+\\\[
+c^2 = a^2 + b^2 
+\\\] (3)
+`
+    document.addEventListener("DOMContentLoaded", () => {
+        md = markdownit().use(texmath.use(katex), {delimiters:'brackets',macros:{"\\RR": "\\mathbb{R}"}});
+        out.innerHTML = md.render(str);
+    })
+  </script>
+</body>
+</html>

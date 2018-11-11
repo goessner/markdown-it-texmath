@@ -151,9 +151,9 @@ texmath.rules = {
                 tag: '\\('
             }
         ],
-        block: [ 
+        block: [
             {   name: 'math_block_eqno',
-                rex: /\\\[\s*?([\s\S]+?)\\\]\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /\\\[([\s\S]+?)\\\]\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '\\['
             },
