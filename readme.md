@@ -95,6 +95,7 @@ Use following links for `texmath.js` and `texmath.css`
 
 ###  [0.5.3] on November 11, 2018
 * Add support for Tex macros (https://katex.org/docs/supported.html#macros) .
+* Bug with [brackets delimiters](https://github.com/goessner/markdown-it-texmath/issues/9) .
 
 ###  [0.5.2] on September 07, 2018
 * Add support for [Kramdown](https://kramdown.gettalong.org/) .
