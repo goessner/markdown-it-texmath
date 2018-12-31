@@ -61,7 +61,7 @@ texmath.block = (rule) =>
                 let token = state.push(rule.name, 'math', 0);
                 token.block = true;
                 token.content = res[1];
-                token.info = res[2];
+                token.info = res[res.length-1];
                 token.markup = rule.tag;
             }
             for (let line=begLine, endpos=res.lastIndex-1; line < endLine; line++)
@@ -153,12 +153,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\\\[([\s\S]+?)\\\]\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /\\\[(((?!\\\]|\\\[)[\s\S])+?)\\\]\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '\\['
             },
             {   name: 'math_block',
-                rex: /\\\[(.+?)\\\]/gmy,
+                rex: /\\\[([\s\S]+?)\\\]/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '\\['
             }
