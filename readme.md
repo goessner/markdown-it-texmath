@@ -35,7 +35,7 @@ This extension is a comfortable tool for scientists, engineers and students with
 
 View a [test table](https://goessner.github.io/markdown-it-texmath/index.html).
 
-[try it our ...](https://goessner.github.io/markdown-it-texmath/markdown-it-texmath-demo.html)
+[try it out ...](https://goessner.github.io/markdown-it-texmath/markdown-it-texmath-demo.html)
 
 ## Use with `node.js`
 
@@ -92,6 +92,9 @@ Use following links for `texmath.js` and `texmath.css`
  nothing yet
 
 ## CHANGELOG
+
+###  [0.5.4] on January 20, 2019
+* Remove pathological [bug within blockquotes](https://github.com/goessner/mdmath/issues/50).
 
 ###  [0.5.3] on November 11, 2018
 * Add support for Tex macros (https://katex.org/docs/supported.html#macros) .

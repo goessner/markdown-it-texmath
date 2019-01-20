@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Stefan Goessner - 2017-18. All rights reserved.
+ *  Copyright (c) Stefan Goessner - 2017-19. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
@@ -22,7 +22,7 @@ function texmath(md,options) {
     }
 }
 
-texmath.applyRule = function(rule, str, beg) {
+texmath.applyRule = function(rule, str, beg, inBlockquote) {
     let pre, match, post;
     rule.rex.lastIndex = beg;
 
@@ -30,7 +30,8 @@ texmath.applyRule = function(rule, str, beg) {
     match = pre && rule.rex.exec(str);
     if (match) {
         match.lastIndex = rule.rex.lastIndex;
-        post = !rule.post || rule.post(str, match.lastIndex-1);
+        post = (!rule.post || rule.post(str, match.lastIndex-1))  // valid post-condition
+            && (!inBlockquote || !match[1].includes('\n'));       // remove evil blockquote bug (https://github.com/goessner/mdmath/issues/50)
     }
     rule.rex.lastIndex = 0;
 
@@ -55,7 +56,7 @@ texmath.inline = (rule) =>
 
 texmath.block = (rule) => 
     function(state, begLine, endLine, silent) {
-        let res = texmath.applyRule(rule, state.src, state.bMarks[begLine] + state.tShift[begLine]);
+        let res = texmath.applyRule(rule, state.src, state.bMarks[begLine] + state.tShift[begLine], state.parentType==='blockquote');
         if (res) {
             if (!silent) {
                 let token = state.push(rule.name, 'math', 0);
