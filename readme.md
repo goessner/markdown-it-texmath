@@ -91,7 +91,15 @@ Use following links for `texmath.js` and `texmath.css`
 
  nothing yet
 
+## FAQ
+
+* __`markdown-it-texmath` with React Native does not work, why ?__
+  * `markdown-it-texmath` is using regular expressions with `y` [(sticky) property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky) and cannot avoid this. The use of the `y` flag in regular expressions means the plugin is not compatible with React Native (which as of now doesn't support it and throws an error `Invalid flags supplied to RegExp constructor`).
+
 ## CHANGELOG
+
+###  [0.5.5] on February 07, 2019
+* Remove [rendering bug with brackets delimiters](https://github.com/goessner/markdown-it-texmath/issues/9).
 
 ###  [0.5.4] on January 20, 2019
 * Remove pathological [bug within blockquotes](https://github.com/goessner/mdmath/issues/50).
