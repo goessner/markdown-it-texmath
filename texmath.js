@@ -186,6 +186,41 @@ texmath.rules = {
             }
         ]
     },
+    julia: {
+        inline: [ 
+            {   name: 'math_inline', 
+                rex: /`{2}([^`]+?)`{2}/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '``'
+            },
+            {   name: 'math_inline', 
+                rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$',
+                pre: texmath.$_pre,
+                post: texmath.$_post
+            },
+            {   name: 'math_single',
+                rex: /\$([^$\s\\]{1}?)\$/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$',
+                pre: texmath.$_pre,
+                post: texmath.$_post
+            }
+        ],
+        block: [
+            {   name: 'math_block_eqno',
+                rex: /`{3}math\s+?([^`]+?)\s+?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
+                tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
+                tag: '```math'
+            },
+            {   name: 'math_block',
+                rex: /`{3}math\s+?([^`]+?)\s+?`{3}/gmy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '```math'
+            }
+        ]
+    },
     kramdown: {
         inline: [ 
             {   name: 'math_inline', 

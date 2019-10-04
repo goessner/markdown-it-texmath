@@ -3,11 +3,11 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
   <link rel="stylesheet" href="https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/css/texmath.css">
   <link rel="stylesheet" href="https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/css/vscode-texmath.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.0/markdown-it.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js"></script>
   <script src="../texmath.js"></script>
 </head>
 <body>
@@ -19,21 +19,21 @@
 Let the right triangle hypothenuse be aligned with the coordinate system *x-axis*. 
 The vector loop closure equation then reads
         
-\[a{\bold e}_\alpha + b\tilde{\bold e}_\alpha + c{\bold e}_x = \bold 0\] (1)
+```math a{\bold e}_\alpha + b\tilde{\bold e}_\alpha + c{\bold e}_x = \bold 0 ``` (1)
         
 with
         
-\[{\bold e}_\alpha = \begin{pmatrix}\cos\alpha\\ \sin\alpha\end{pmatrix} \quad and \quad {\tilde\bold e}_\alpha = \begin{pmatrix}-\sin\alpha\\ \cos\alpha\end{pmatrix}\]
+```math {\bold e}_\alpha = \begin{pmatrix}\cos\alpha\\ \sin\alpha\end{pmatrix} \quad and \quad {\tilde\bold e}_\alpha = \begin{pmatrix}-\sin\alpha\\ \cos\alpha\end{pmatrix} ```
         
-Resolving for the hypothenuse part \(c{\bold e}_x\) in the loop closure equation (1) 
+Resolving for the hypothenuse part ``c{\bold e}_x`` in the loop closure equation (1) 
         
-\[-c{\bold e}_x = a{\bold e}_\alpha + b\tilde{\bold e}_\alpha\]
+```math -c{\bold e}_x = a{\bold e}_\alpha + b\tilde{\bold e}_\alpha ```
         
 and squaring 
         
 > finally results in the Pythagorean theorem (2)
 >
-> \[ c^2 = a^2 + b^2 \] (2)</textarea>
+> ```math c^2 = a^2 + b^2 ``` (2)</textarea>
     <div id="out" class="markdown-body" style="flex-grow:1; padding:5px;"></div>
   </div>
   <script>
@@ -42,7 +42,7 @@ and squaring
         let tm = texmath.use(katex);
         // overwrite texmath render function (suppressing katex)
         // tm.render = function(tex, isblock) { return tex; }
-        md = markdownit({html:true}).use(tm,{delimiters:'brackets'});
+        md = markdownit({html:true}).use(tm,{delimiters:'julia'});
         inp = document.getElementById('inp');
         out = document.getElementById('out');
         parse = () => { out.innerHTML = md.render(inp.value); }

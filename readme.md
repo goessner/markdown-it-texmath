@@ -26,6 +26,10 @@ This extension is a comfortable tool for scientists, engineers and students with
     * inline: ``$`...`$``
     * display: `` ```math ... ``` ``
     * display + equation number: `` ```math ... ``` (1)``
+  * `'julia'`
+    * inline: `$...$`  or ``` ``...`` ```
+    * display: `` ```math ... ``` ``
+    * display + equation number: `` ```math ... ``` (1)``
   * `'kramdown'`
     * inline: ``$$...$$``
     * display: `$$...$$`
@@ -97,6 +101,9 @@ Use following links for `texmath.js` and `texmath.css`
   * `markdown-it-texmath` is using regular expressions with `y` [(sticky) property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky) and cannot avoid this. The use of the `y` flag in regular expressions means the plugin is not compatible with React Native (which as of now doesn't support it and throws an error `Invalid flags supplied to RegExp constructor`).
 
 ## CHANGELOG
+
+###  [0.6.0] on October 04, 2019
+* Add support for [Julia Markdown](https://docs.julialang.org/en/v1/stdlib/Markdown/) on [request](https://github.com/goessner/markdown-it-texmath/issues/15).
 
 ###  [0.5.5] on February 07, 2019
 * Remove [rendering bug with brackets delimiters](https://github.com/goessner/markdown-it-texmath/issues/9).
