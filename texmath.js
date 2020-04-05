@@ -1,12 +1,24 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Stefan Goessner - 2017-19. All rights reserved.
+ *  Copyright (c) Stefan Goessner - 2017-20. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 
-function texmath(md,options) {
+function texmath(md, options) {
     let delimiters = options && options.delimiters || 'dollars',
         macros = options && options.macros;
+
+    if (!texmath.katex) { // else ... depricated `use` method was used ...
+        if (options && typeof options.engine === 'object') {
+            texmath.katex = options.engine;
+        }
+        else if (typeof module === "object")
+            texmath.katex = require('katex');
+        else
+            texmath.katex = { renderToString() { return 'No math renderer found.' }};
+    }
+
+    texmath.katex = texmath.katex || options && options.engine; 
 
     if (delimiters in texmath.rules) {
         for (let rule of texmath.rules[delimiters].inline) {
@@ -86,6 +98,7 @@ texmath.render = function(tex,displayMode,macros) {
     return res;
 }
 
+// ! deprecated ... use options !
 texmath.use = function(katex) {  // math renderer used ...
     texmath.katex = katex;       // ... katex solely at current ...
     return texmath;
@@ -227,6 +240,41 @@ texmath.rules = {
                 rex: /\${2}([^$\r\n]*?)\${2}/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$$'
+            }
+        ],
+        block: [
+            {   name: 'math_block_eqno',
+                rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
+                tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
+                tag: '$$'
+            },
+            {   name: 'math_block',
+                rex: /\${2}([^$]*?)\${2}/gmy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '$$'
+            }
+        ]
+    },
+    pandoc: {
+        inline: [ 
+            {   name: 'math_inline', 
+                rex: /\${2}([^$\r\n]*?)\${2}/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$$'
+            },
+            {   name: 'math_inline', 
+                rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$',
+                pre: texmath.$_pre,
+                post: texmath.$_post
+            },
+            {   name: 'math_single',
+                rex: /\$([^$\s\\]{1}?)\$/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '$',
+                pre: texmath.$_pre,
+                post: texmath.$_post
             }
         ],
         block: [

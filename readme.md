@@ -1,6 +1,7 @@
 [![License](https://img.shields.io/github/license/goessner/markdown-it-texmath.svg)](https://github.com/goessner/markdown-it-texmath/blob/master/licence.txt)
 [![npm](https://img.shields.io/npm/v/markdown-it-texmath.svg)](https://www.npmjs.com/package/markdown-it-texmath)
 [![npm](https://img.shields.io/npm/dt/markdown-it-texmath.svg)](https://www.npmjs.com/package/markdown-it-texmath)
+[![](https://data.jsdelivr.com/v1/package/npm/markdown-it-texmath/badge)](https://www.jsdelivr.com/package/npm/markdown-it-texmath)
 
 # markdown-it-texmath
 
@@ -34,6 +35,10 @@ This extension is a comfortable tool for scientists, engineers and students with
     * inline: ``$$...$$``
     * display: `$$...$$`
     * display + equation number: `$$...$$ (1)`
+  * `'pandoc'`
+    * inline: `$...$`  or `$$...$$`
+    * display: `$$...$$`
+    * display + equation number: `$$...$$ (1)`
 
 ## Show me 
 
@@ -49,9 +54,11 @@ npm install markdown-it-texmath
 ```
 Use it with JavaScript.
 ```js
-let kt = require('katex'),
-    tm = require('markdown-it-texmath').use(kt),
-    md = require('markdown-it')().use(tm,{delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
+    tm = require('markdown-it-texmath'),
+    md = require('markdown-it')().use(tm, { engine: require('katex'),
+                                            delimiters:'dollars',
+                                            macros:{"\\RR": "\\mathbb{R}"}
+                                          });
 
 md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$.')
 ```
@@ -61,20 +68,23 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
 <html>
 <head>
   <meta charset='utf-8'>
-  <link rel="stylesheet" href="katex.min.css">
-  <link rel="stylesheet" href="texmath.css">
-  <script src="markdown-it.min.js"></script>
-  <script src="katex.min.js"></script>
-  <script src="texmath.js"></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js"></script>
 </head>
 <body>
   <div id="out"></div>
   <script>
-    let md;
     document.addEventListener("DOMContentLoaded", () => {
         const tm = texmath.use(katex);
-        md = markdownit().use(tm,{delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
-        out.innerHTML = md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in //RR 2.');
+        const md = markdownit().use(tm, { engine: katex,
+                                          delimiters:'dollars',
+                                          macros:{"\\RR": "\\mathbb{R}"}
+                                        });
+        document.getElementById('out').innerHTML = 
+            md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in //RR 2.');
     })
   </script>
 </body>
@@ -100,7 +110,15 @@ Use following links for `texmath.js` and `texmath.css`
 * __`markdown-it-texmath` with React Native does not work, why ?__
   * `markdown-it-texmath` is using regular expressions with `y` [(sticky) property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky) and cannot avoid this. The use of the `y` flag in regular expressions means the plugin is not compatible with React Native (which as of now doesn't support it and throws an error `Invalid flags supplied to RegExp constructor`).
 
+* __Why doesn't `markdown-it-texmath` work with mathjax ?__
+  * `markdown-it-texmath` is a personal project of mine. As it does very well what I want it to do, I offer it to the public as an open source plugin. I do not have time or interest to integrate other math engines.
+  But if someone wants to help here out, pull requests are always welcome.
+
 ## CHANGELOG
+
+###  [0.6.5] on April 05, 2020
+* Hand instance of `katex` over to `markdown-it-texmath` using `options.engine` object. Works with `node.js` and browsers. With `node.js` `options.engine` entry `{ engine:'katex' }` as a string also works.
+* Add beta support for [Pandoc](https://docs.julialang.org/en/v1/stdlib/Markdown/) syntax on [request](https://github.com/goessner/markdown-it-texmath/issues/18). Here waiting for test results.
 
 ###  [0.6.0] on October 04, 2019
 * Add support for [Julia Markdown](https://docs.julialang.org/en/v1/stdlib/Markdown/) on [request](https://github.com/goessner/markdown-it-texmath/issues/15).
