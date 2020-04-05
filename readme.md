@@ -118,6 +118,7 @@ Use following links for `texmath.js` and `texmath.css`
 
 ###  [0.6.5] on April 05, 2020
 * Hand instance of `katex` over to `markdown-it-texmath` using `options.engine` object. Works with `node.js` and browsers. With `node.js` `options.engine` entry `{ engine:'katex' }` as a string also works.
+* As a consequence of the topic before, the `use` method of `markdown-it-texmath` is deprecated now.
 * Add beta support for [Pandoc](https://docs.julialang.org/en/v1/stdlib/Markdown/) syntax on [request](https://github.com/goessner/markdown-it-texmath/issues/18). Here waiting for test results.
 * Using [jsdelivr](https://www.jsdelivr.com/package/npm/markdown-it-texmath?path=css) as cdn from now on.
 
