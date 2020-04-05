@@ -93,8 +93,8 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
 ## CDN
 
 Use following links for `texmath.js` and `texmath.css`
-* `https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/texmath.js`
-* `https://gitcdn.xyz/cdn/goessner/markdown-it-texmath/master/texmath.css`
+* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.5/texmath.min.js`
+* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.5/css/texmath.min.css`
 
 ## Dependencies
 
@@ -119,6 +119,7 @@ Use following links for `texmath.js` and `texmath.css`
 ###  [0.6.5] on April 05, 2020
 * Hand instance of `katex` over to `markdown-it-texmath` using `options.engine` object. Works with `node.js` and browsers. With `node.js` `options.engine` entry `{ engine:'katex' }` as a string also works.
 * Add beta support for [Pandoc](https://docs.julialang.org/en/v1/stdlib/Markdown/) syntax on [request](https://github.com/goessner/markdown-it-texmath/issues/18). Here waiting for test results.
+* Using [jsdelivr](https://www.jsdelivr.com/package/npm/markdown-it-texmath?path=css) as cdn from now on.
 
 ###  [0.6.0] on October 04, 2019
 * Add support for [Julia Markdown](https://docs.julialang.org/en/v1/stdlib/Markdown/) on [request](https://github.com/goessner/markdown-it-texmath/issues/15).
