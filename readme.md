@@ -93,8 +93,8 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
 ## CDN
 
 Use following links for `texmath.js` and `texmath.css`
-* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.5/texmath.min.js`
-* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.5/css/texmath.min.css`
+* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.6/texmath.min.js`
+* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.6/css/texmath.min.css`
 
 ## Dependencies
 
@@ -115,6 +115,9 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+
+###  [0.6.6] on April 07, 2020
+* Removed a small bug in activation method.
 
 ###  [0.6.5] on April 05, 2020
 * Hand instance of `katex` over to `markdown-it-texmath` using `options.engine` object. Works with `node.js` and browsers. With `node.js` `options.engine` entry `{ engine:'katex' }` as a string also works.

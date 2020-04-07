@@ -14,11 +14,9 @@ function texmath(md, options) {
         }
         else if (typeof module === "object")
             texmath.katex = require('katex');
-        else
+        else  // artifical error object.
             texmath.katex = { renderToString() { return 'No math renderer found.' }};
     }
-
-    texmath.katex = texmath.katex || options && options.engine; 
 
     if (delimiters in texmath.rules) {
         for (let rule of texmath.rules[delimiters].inline) {
@@ -257,24 +255,10 @@ texmath.rules = {
     },
     pandoc: {
         inline: [ 
-            {   name: 'math_inline', 
-                rex: /\${2}([^$\r\n]*?)\${2}/gy,
-                tmpl: '<eq>$1</eq>',
+            {   name: 'math_block', 
+                rex: /\${2}([^$]*?)\${2}/gy,
+                tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
-            },
-            {   name: 'math_inline', 
-                rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
-                tmpl: '<eq>$1</eq>',
-                tag: '$',
-                pre: texmath.$_pre,
-                post: texmath.$_post
-            },
-            {   name: 'math_single',
-                rex: /\$([^$\s\\]{1}?)\$/gy,
-                tmpl: '<eq>$1</eq>',
-                tag: '$',
-                pre: texmath.$_pre,
-                post: texmath.$_post
             }
         ],
         block: [
