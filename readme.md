@@ -57,7 +57,7 @@ Use it with JavaScript.
     tm = require('markdown-it-texmath'),
     md = require('markdown-it')().use(tm, { engine: require('katex'),
                                             delimiters:'dollars',
-                                            macros:{"\\RR": "\\mathbb{R}"}
+                                            katexOptions: { macros: {"\\RR": "\\mathbb{R}"} }
                                           });
 
 md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$.')
@@ -81,7 +81,7 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
         const tm = texmath.use(katex);
         const md = markdownit().use(tm, { engine: katex,
                                           delimiters:'dollars',
-                                          macros:{"\\RR": "\\mathbb{R}"}
+                                          katexOptions: { macros: {"\\RR": "\\mathbb{R}"} }
                                         });
         document.getElementById('out').innerHTML = 
             md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in //RR 2.');

@@ -5,8 +5,9 @@
 'use strict';
 
 function texmath(md, options) {
-    let delimiters = options && options.delimiters || 'dollars',
-        macros = options && options.macros;
+    let delimiters = options && options.delimiters || 'dollars';
+    let katexOptions = options && options.katexOptions || { throwOnError: false };
+    katexOptions.macros = options && options.macros || katexOptions.macros;  // ensure backwards compatibility
 
     if (!texmath.katex) { // else ... depricated `use` method was used ...
         if (options && typeof options.engine === 'object') {
@@ -21,13 +22,13 @@ function texmath(md, options) {
     if (delimiters in texmath.rules) {
         for (let rule of texmath.rules[delimiters].inline) {
             md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false,macros));
+            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false,katexOptions));
         }
 
         for (let rule of texmath.rules[delimiters].block) {
             md.block.ruler.before('fence', rule.name, texmath.block(rule));
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
-                                                                     .replace(/\$1/,texmath.render(tokens[idx].content,true,macros));
+                                                                     .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
         }
     }
 }
@@ -85,10 +86,11 @@ texmath.block = (rule) =>
         return !!res;
     }
 
-texmath.render = function(tex,displayMode,macros) {
+texmath.render = function(tex,displayMode,options) {
+    options.displayMode = displayMode;
     let res;
     try {
-        res = texmath.katex.renderToString(tex,{throwOnError:false,displayMode,macros});
+        res = texmath.katex.renderToString(tex, options);
     }
     catch(err) {
         res = tex+": "+err.message.replace("<","&lt;");
