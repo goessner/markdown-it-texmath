@@ -117,7 +117,7 @@ Use following links for `texmath.js` and `texmath.css`
 ## CHANGELOG
 
 ###  [0.6.7] on April 29, 2020
-* Now supporting [ketx options](https://katex.org/docs/options.html). Thanks goto [Kirill](https://github.com/xuhcc).
+* Now supporting [katex options](https://katex.org/docs/options.html). Thanks goto [Kirill](https://github.com/xuhcc).
 
 ###  [0.6.6] on April 07, 2020
 * Removed a small bug in activation method.
