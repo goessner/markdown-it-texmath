@@ -93,8 +93,8 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
 ## CDN
 
 Use following links for `texmath.js` and `texmath.css`
-* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.6/texmath.min.js`
-* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.6/css/texmath.min.css`
+* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.7/texmath.min.js`
+* `https://cdn.jsdelivr.net/npm/markdown-it-texmath@0.6.7/css/texmath.min.css`
 
 ## Dependencies
 
