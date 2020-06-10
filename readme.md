@@ -107,6 +107,14 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## FAQ
 
+* Display math inside of `blockquote` blocks is able to span multiple lines with version "0.6.8". Every single display math line **must** begin with a `>` character then, as in 
+```
+> $$ a +     
+>     b 
+> = c
+> $$
+```
+
 * __`markdown-it-texmath` with React Native does not work, why ?__
   * `markdown-it-texmath` is using regular expressions with `y` [(sticky) property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky) and cannot avoid this. The use of the `y` flag in regular expressions means the plugin is not compatible with React Native (which as of now doesn't support it and throws an error `Invalid flags supplied to RegExp constructor`).
 
@@ -114,7 +122,12 @@ Use following links for `texmath.js` and `texmath.css`
   * `markdown-it-texmath` is a personal project of mine. As it does very well what I want it to do, I offer it to the public as an open source plugin. I do not have time or interest to integrate other math engines.
   But if someone wants to help here out, pull requests are always welcome.
 
+
 ## CHANGELOG
+
+###  [0.6.8] on June 06, 2020
+* Now display math inside of `blockquote` blocks can span multiple lines, provided that every line starts with a `>` character.
+* Possible cause of [blockquote bug(https://github.com/goessner/mdmath/issues/50)] presumably eliminated.
 
 ###  [0.6.7] on April 29, 2020
 * Now supporting [katex options](https://katex.org/docs/options.html). Thanks goto [Kirill](https://github.com/xuhcc).

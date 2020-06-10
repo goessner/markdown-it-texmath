@@ -5,8 +5,8 @@
 'use strict';
 
 function texmath(md, options) {
-    let delimiters = options && options.delimiters || 'dollars';
-    let katexOptions = options && options.katexOptions || { throwOnError: false };
+    const delimiters = options && options.delimiters || 'dollars';
+    const katexOptions = options && options.katexOptions || { throwOnError: false };
     katexOptions.macros = options && options.macros || katexOptions.macros;  // ensure backwards compatibility
 
     if (!texmath.katex) { // else ... depricated `use` method was used ...
@@ -20,12 +20,12 @@ function texmath(md, options) {
     }
 
     if (delimiters in texmath.rules) {
-        for (let rule of texmath.rules[delimiters].inline) {
+        for (const rule of texmath.rules[delimiters].inline) {
             md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false,katexOptions));
         }
 
-        for (let rule of texmath.rules[delimiters].block) {
+        for (const rule of texmath.rules[delimiters].block) {
             md.block.ruler.before('fence', rule.name, texmath.block(rule));
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
                                                                      .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
@@ -37,26 +37,28 @@ texmath.applyRule = function(rule, str, beg, inBlockquote) {
     let pre, match, post;
     rule.rex.lastIndex = beg;
 
-    pre = str.startsWith(rule.tag,beg) && (!rule.pre || rule.pre(str,beg));
+    pre = str.startsWith(rule.tag,beg) && (!rule.pre || rule.pre(str,beg)); // pre-condition ...
     match = pre && rule.rex.exec(str);
     if (match) {
         match.lastIndex = rule.rex.lastIndex;
-        post = (!rule.post || rule.post(str, match.lastIndex-1))  // valid post-condition
-            && (!inBlockquote || !match[1].includes('\n'));       // remove evil blockquote bug (https://github.com/goessner/mdmath/issues/50)
+        post = (!rule.post || rule.post(str, match.lastIndex-1))  // valid post-condition ...
+            && (!inBlockquote || !match[1].includes('\n') || !/\n[^>]/gm.test(match[1]));  // not in blockquote || on single line || every bol == '>' 
+        if (post && inBlockquote)
+           match[1] = match[1].replace(/\n>/gm,'\n');  // remove '>' at bol inside of display math !
     }
     rule.rex.lastIndex = 0;
 
-    return post && match;
+    return post && match;  // returning match object ... !
 }
 
 // texmath.inline = (rule) => dollar;  // just for testing ..
 
 texmath.inline = (rule) => 
     function(state, silent) {
-        let res = texmath.applyRule(rule, state.src, state.pos);
+        const res = texmath.applyRule(rule, state.src, state.pos);
         if (res) {
             if (!silent) {
-                let token = state.push(rule.name, 'math', 0);
+                const token = state.push(rule.name, 'math', 0);
                 token.content = res[1];  // group 1 from regex ..
                 token.markup = rule.tag;
             }
@@ -67,10 +69,11 @@ texmath.inline = (rule) =>
 
 texmath.block = (rule) => 
     function(state, begLine, endLine, silent) {
-        let res = texmath.applyRule(rule, state.src, state.bMarks[begLine] + state.tShift[begLine], state.parentType==='blockquote');
+        const res = texmath.applyRule(rule, state.src, state.bMarks[begLine] + state.tShift[begLine], state.parentType==='blockquote');
         if (res) {
+console.log(res)
             if (!silent) {
-                let token = state.push(rule.name, 'math', 0);
+                const token = state.push(rule.name, 'math', 0);
                 token.block = true;
                 token.content = res[1];
                 token.info = res[res.length-1];
@@ -147,12 +150,12 @@ function dollar(state, silent) {
 */
 
 texmath.$_pre = (str,beg) => {
-    let prv = beg > 0 ? str[beg-1].charCodeAt(0) : false;
+    const prv = beg > 0 ? str[beg-1].charCodeAt(0) : false;
     return !prv || prv !== 0x5c                // no backslash,
                 && (prv < 0x30 || prv > 0x39); // no decimal digit .. before opening '$'
 }
 texmath.$_post = (str,end) => {
-    let nxt = str[end+1] && str[end+1].charCodeAt(0);
+    const nxt = str[end+1] && str[end+1].charCodeAt(0);
     return !nxt || nxt < 0x30 || nxt > 0x39;   // no decimal digit .. after closing '$'
 }
 

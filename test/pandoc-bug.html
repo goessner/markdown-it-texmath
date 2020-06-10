@@ -45,7 +45,7 @@ c^2 = a^2 + b^2
 $$ (3)
 `
     document.addEventListener("DOMContentLoaded", () => {
-        md = markdownit().use(texmath, {engine:katex, delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
+        md = markdownit().use(texmath, {engine:katex, delimiters:'pandoc',macros:{"\\RR": "\\mathbb{R}"}});
         out.innerHTML = md.render(str);
     })
   </script>

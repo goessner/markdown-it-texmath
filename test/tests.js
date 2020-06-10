@@ -141,6 +141,10 @@ const tests = [
   comment: "escaped dollars '\\$' are interpreted as\ndollar '$' characters."
 },
 { valid: false,
+  src: "> \$\$ a+b\n=c\$\$",
+  comment: "new line in blockquote block."
+},
+{ valid: false,
   src: "some text\n \$\\$a+b=c\$\$",
   comment: "empty line between text and display formula is required."
 },
