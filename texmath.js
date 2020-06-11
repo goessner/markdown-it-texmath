@@ -71,7 +71,6 @@ texmath.block = (rule) =>
     function(state, begLine, endLine, silent) {
         const res = texmath.applyRule(rule, state.src, state.bMarks[begLine] + state.tShift[begLine], state.parentType==='blockquote');
         if (res) {
-console.log(res)
             if (!silent) {
                 const token = state.push(rule.name, 'math', 0);
                 token.block = true;

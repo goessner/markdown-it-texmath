@@ -125,7 +125,7 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## CHANGELOG
 
-###  [0.6.8] on June 06, 2020
+###  [0.6.9] on June 11, 2020
 * Now display math inside of `blockquote` blocks can span multiple lines, provided that every line starts with a `>` character.
 * Possible cause of [blockquote bug(https://github.com/goessner/mdmath/issues/50)] presumably eliminated.
 * Update to `markdown-it` version 11.0.0
