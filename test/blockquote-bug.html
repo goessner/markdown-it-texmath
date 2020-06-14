@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+  <link rel="stylesheet" href="../css/texmath.css">
+  <style>blockquote { background-color:#eee;} </style>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+  <script src="../texmath.js"></script>
+</head>
+<body>
+  <div id="out"></div>
+  <script>
+    const str = `
+> *Hi*
+> > He $5 +\\pi$
+> >
+> > $$c^2 = 
+> > a^2 + \\phi
+> > \\sqrt{b^2}$$ (2)
+>
+> ahsgahg
+
+Ho xyz $$\\psi+\\phi$$ abcdef ashagsh
+
+abcdefghi
+
+$$a + b = \\pi$$ (3)
+x
+`
+    document.addEventListener("DOMContentLoaded", () => {
+        const md = markdownit().use(texmath, {engine:katex, delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
+        out.innerHTML = md.render(str);
+    })
+  </script>
+</body>
+</html>

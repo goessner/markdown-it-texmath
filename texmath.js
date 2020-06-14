@@ -22,7 +22,7 @@ function texmath(md, options) {
     if (delimiters in texmath.rules) {
         for (const rule of texmath.rules[delimiters].inline) {
             md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,false,katexOptions));
+            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,!!rule.displayMode,katexOptions));
         }
 
         for (const rule of texmath.rules[delimiters].block) {
@@ -33,60 +33,69 @@ function texmath(md, options) {
     }
 }
 
-texmath.applyRule = function(rule, str, beg, inBlockquote) {
-    let pre, match, post;
-    rule.rex.lastIndex = beg;
-
-    pre = str.startsWith(rule.tag,beg) && (!rule.pre || rule.pre(str,beg)); // pre-condition ...
-    match = pre && rule.rex.exec(str);
-    if (match) {
-        match.lastIndex = rule.rex.lastIndex;
-        post = (!rule.post || rule.post(str, match.lastIndex-1))  // valid post-condition ...
-            && (!inBlockquote || !match[1].includes('\n') || !/\n[^>]/gm.test(match[1]));  // not in blockquote || on single line || every bol == '>' 
-        if (post && inBlockquote)
-           match[1] = match[1].replace(/\n>/gm,'\n');  // remove '>' at bol inside of display math !
-    }
-    rule.rex.lastIndex = 0;
-
-    return post && match;  // returning match object ... !
-}
-
 // texmath.inline = (rule) => dollar;  // just for testing ..
 
 texmath.inline = (rule) => 
     function(state, silent) {
-        const res = texmath.applyRule(rule, state.src, state.pos);
-        if (res) {
+        const pos = state.pos;
+        const str = state.src;
+        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, pos));  // valid pre-condition ...
+        const match = pre && rule.rex.exec(str);
+        const lastPos = match && (rule.rex.lastIndex - 1);
+
+        if (match && (!rule.post || rule.post(str, lastPos))) {   // match && valid post-condition
             if (!silent) {
                 const token = state.push(rule.name, 'math', 0);
-                token.content = res[1];  // group 1 from regex ..
+                token.content = match[1];
                 token.markup = rule.tag;
             }
-            state.pos = res.lastIndex;
+            state.pos = rule.rex.lastIndex;
         }
-        return !!res;
+        rule.rex.lastIndex = 0;
+        return !!match;
     }
 
 texmath.block = (rule) => 
-    function(state, begLine, endLine, silent) {
-        const res = texmath.applyRule(rule, state.src, state.bMarks[begLine] + state.tShift[begLine], state.parentType==='blockquote');
-        if (res) {
+    function block(state, begLine, endLine, silent) {
+        texmath.inBlockquote(state.tokens);  // cache current blockquote level ...
+
+        const pos = state.bMarks[begLine] + state.tShift[begLine];
+        const str = state.src;
+        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, pos));  // valid pre-condition ....
+        const match = pre && rule.rex.exec(str);
+        const lastPos = match && (rule.rex.lastIndex - 1);
+
+        if (match && (!rule.post || rule.post(str, lastPos))) {    // match and valid post-condition ...
+            if (match[1].includes('\n') && texmath.inBlockquote.level) // multiline display math inside of blockquote block.
+                match[1] = match[1].replace(/\n(\s*?>)+/gm,'\n');  // remove all leading '>' inside of display math !
             if (!silent) {
                 const token = state.push(rule.name, 'math', 0);
                 token.block = true;
-                token.content = res[1];
-                token.info = res[res.length-1];
+                token.content = match[1];
+                token.info = match[match.length-1];
                 token.markup = rule.tag;
             }
-            for (let line=begLine, endpos=res.lastIndex-1; line < endLine; line++)
+            for (let line=begLine, endpos=lastPos; line < endLine; line++)
                 if (endpos >= state.bMarks[line] && endpos <= state.eMarks[line]) { // line for end of block math found ...
                     state.line = line+1;
                     break;
                 }
-            state.pos = res.lastIndex;
         }
-        return !!res;
+        rule.rex.lastIndex = 0;
+        return !!match;
     }
+
+texmath.inBlockquote = function(tokens) {
+    if (tokens && tokens.length) {
+        const len = tokens.length;
+        texmath.inBlockquote.level = tokens[len-1].type === 'blockquote_open'  ? tokens[len-1].level + 1
+                                   : tokens[len-1].type === 'blockquote_close' ? tokens[len-1].level
+                                   : texmath.inBlockquote.level;
+    }
+    else
+        texmath.inBlockquote.level = 0;
+}
+texmath.inBlockquote.level = 0;
 
 texmath.render = function(tex,displayMode,options) {
     options.displayMode = displayMode;
@@ -208,15 +217,8 @@ texmath.rules = {
                 tmpl: '<eq>$1</eq>',
                 tag: '``'
             },
-            {   name: 'math_inline', 
-                rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
-                tmpl: '<eq>$1</eq>',
-                tag: '$',
-                pre: texmath.$_pre,
-                post: texmath.$_post
-            },
-            {   name: 'math_single',
-                rex: /\$([^$\s\\]{1}?)\$/gy,
+            {   name: 'math_inline',
+                rex: /\$((?:\S?)|(?:\S.*?\S))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
                 pre: texmath.$_pre,
@@ -239,56 +241,36 @@ texmath.rules = {
     kramdown: {
         inline: [ 
             {   name: 'math_inline', 
-                rex: /\${2}([^$\r\n]*?)\${2}/gy,
+                rex: /\${2}(.+?)\${2}/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$$'
             }
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /\${2}([^$]+?)\${2}\s*?\(([^)\s]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '$$'
             },
             {   name: 'math_block',
-                rex: /\${2}([^$]*?)\${2}/gmy,
-                tmpl: '<section><eqn>$1</eqn></section>',
-                tag: '$$'
-            }
-        ]
-    },
-    pandoc: {
-        inline: [ 
-            {   name: 'math_block', 
-                rex: /\${2}([^$]*?)\${2}/gy,
-                tmpl: '<section><eqn>$1</eqn></section>',
-                tag: '$$'
-            }
-        ],
-        block: [
-            {   name: 'math_block_eqno',
-                rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
-                tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
-                tag: '$$'
-            },
-            {   name: 'math_block',
-                rex: /\${2}([^$]*?)\${2}/gmy,
+                rex: /\${2}([^$]+?)\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
             }
         ]
     },
     dollars: {
-        inline: [ 
-            {   name: 'math_inline', 
-                rex: /\$(\S[^$\r\n]*?[^\s\\]{1}?)\$/gy,
-                tmpl: '<eq>$1</eq>',
-                tag: '$',
+        inline: [
+            {   name: 'math_inline_double',
+                rex: /\${2}((?:\S)|(?:\S.*?\S))\${2}/gy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '$$',
+                displayMode: true,
                 pre: texmath.$_pre,
                 post: texmath.$_post
             },
-            {   name: 'math_single',
-                rex: /\$([^$\s\\]{1}?)\$/gy,
+            {   name: 'math_inline',
+                rex: /\$((?:\S)|(?:\S.*?\S))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
                 pre: texmath.$_pre,
@@ -297,12 +279,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /\${2}([^$]+?)\${2}\s*?\(([^)\s]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '$$'
             },
             {   name: 'math_block',
-                rex: /\${2}([^$]*?)\${2}/gmy,
+                rex: /\${2}([^$]+?)\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
             }

@@ -16,7 +16,7 @@ This extension is a comfortable tool for scientists, engineers and students with
 * Inline math with tables, lists and blockquote.
 * User setting delimiters:
   * `'dollars'` (default)
-    * inline: `$...$`
+    * inline: `$...$` or `$$...$$`
     * display: `$$...$$`
     * display + equation number: `$$...$$ (1)`
   * `'brackets'`
@@ -33,10 +33,6 @@ This extension is a comfortable tool for scientists, engineers and students with
     * display + equation number: `` ```math ... ``` (1)``
   * `'kramdown'`
     * inline: ``$$...$$``
-    * display: `$$...$$`
-    * display + equation number: `$$...$$ (1)`
-  * `'pandoc'`
-    * inline: `$...$`  or `$$...$$`
     * display: `$$...$$`
     * display + equation number: `$$...$$ (1)`
 
@@ -107,7 +103,11 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## FAQ
 
-* Display math inside of `blockquote` blocks is able to span multiple lines with version "0.6.8". Every single display math line **must** begin with a `>` character then, as in 
+* __Support of inline syntax of display math ?__   
+  * Inline syntax of display math with `dollars` mode is supported starting from version "0.7.0". So `'This formula $$a+b=c$$ will result in display math presentation'`, i.e. gets displayed on a separate line. For *true* inline math use `$..$` mode like before.
+
+* __Multiline diplay math in `blockquote` block possible ?__   
+  * Display math inside of `blockquote` blocks is able to span multiple lines with version "0.6.8". Every single display math line **must** begin with a `>` character then, as in 
 ```
 > $$ a +     
 >     b 
@@ -118,12 +118,18 @@ Use following links for `texmath.js` and `texmath.css`
 * __`markdown-it-texmath` with React Native does not work, why ?__
   * `markdown-it-texmath` is using regular expressions with `y` [(sticky) property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky) and cannot avoid this. The use of the `y` flag in regular expressions means the plugin is not compatible with React Native (which as of now doesn't support it and throws an error `Invalid flags supplied to RegExp constructor`).
 
-* __Why doesn't `markdown-it-texmath` work with mathjax ?__
-  * `markdown-it-texmath` is a personal project of mine. As it does very well what I want it to do, I offer it to the public as an open source plugin. I do not have time or interest to integrate other math engines.
+* __Why doesn't `markdown-it-texmath` work with other engines ?__
+  * `markdown-it-texmath` is a personal project of mine. As it does very well with KaTeX what I want it to do, I offer it to the public as an open source plugin. I do not have time or interest to integrate other math engines.
   But if someone wants to help here out, pull requests are always welcome.
 
 
 ## CHANGELOG
+
+###  [0.7.0] on June 14, 2020
+* Experimental `pandoc` mode removed. Enhanced `dollars` mode now does, what `pandoc` mode was requiring.
+* With `dollars` mode inline math expression `$$..$$` will result in display math presentation now. Adding equation numbers `$$..$$(1)` is not supported in inline syntax.
+* Significant code redesign and regular expression optimization results in more compact code and performance gain ... not measured though.
+* Bug with display math inside of `blockquote` blocks removed.
 
 ###  [0.6.9] on June 11, 2020
 * Now display math inside of `blockquote` blocks can span multiple lines, provided that every line starts with a `>` character.
