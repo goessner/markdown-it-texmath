@@ -125,7 +125,7 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## CHANGELOG
 
-###  [0.7.1] on June 22, 2020
+###  [0.7.2] on June 22, 2020
 * Regex bug with `gitlab` mode removed.
 
 ###  [0.7.0] on June 14, 2020

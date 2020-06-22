@@ -204,7 +204,7 @@ texmath.rules = {
                 tag: '```math'
             },
             {   name: 'math_block',
-                rex: /`{3}math\s*?([^`]*?)\s+?`{3}/gmy,
+                rex: /`{3}math\s*?([^`]*?)\s*?`{3}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '```math'
             }
