@@ -125,6 +125,9 @@ Use following links for `texmath.js` and `texmath.css`
 
 ## CHANGELOG
 
+###  [0.7.1] on June 22, 2020
+* Regex bug with `gitlab` mode removed.
+
 ###  [0.7.0] on June 14, 2020
 * Experimental `pandoc` mode removed. Enhanced `dollars` mode now does, what `pandoc` mode was requiring.
 * With `dollars` mode inline math expression `$$..$$` will result in display math presentation now. Adding equation numbers `$$..$$(1)` is not supported in inline syntax.

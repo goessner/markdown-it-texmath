@@ -67,7 +67,7 @@ texmath.block = (rule) =>
 
         if (match && (!rule.post || rule.post(str, lastPos))) {    // match and valid post-condition ...
             if (match[1].includes('\n') && texmath.inBlockquote.level) // multiline display math inside of blockquote block.
-                match[1] = match[1].replace(/\n(\s*?>)+/gm,'\n');  // remove all leading '>' inside of display math !
+                match[1] = match[1].replace(/(^(?:\s*>)+)/gm,'\n');  // so remove all leading '>' inside of display math !
             if (!silent) {
                 const token = state.push(rule.name, 'math', 0);
                 token.block = true;
@@ -199,12 +199,12 @@ texmath.rules = {
         ],
         block: [ 
             {   name: 'math_block_eqno',
-                rex: /`{3}math\s+?([^`]+?)\s+?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /`{3}math\s*?([^`]+?)\s*?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '```math'
             },
             {   name: 'math_block',
-                rex: /`{3}math\s+?([^`]+?)\s+?`{3}/gmy,
+                rex: /`{3}math\s*?([^`]*?)\s+?`{3}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '```math'
             }

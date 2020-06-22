@@ -14,23 +14,34 @@
   <script>
     const str = `
 > *Hi*
-> > He $5 +\\pi$
+> > He $\`5 +\\pi\`$
 > >
-> > $$c^2 = 
+> > \`\`\`math 
+> > c^2 = 
 > > a^2 + \\phi
-> > \\sqrt{b^2}$$ (2)
+> > \\sqrt{b^2}
+> > \`\`\` (2)
 >
 > ahsgahg
 
-Ho xyz $$\\psi+\\phi$$ abcdef ashagsh
+Ho xyz \`\`\`math\\psi+\\phi \`\`\` abcdef ashagsh
 
 abcdefghi
 
-$$a + b = \\pi$$ (3)
+\`\`\`math a + b = \\pi \`\`\` (3)
 x
+
+>\`\`\`math
+>\\frac{1}{2}
+>\`\`\`
+
+> \`\`\`math
+> \\frac{1}{2}
+> \`\`\`
+
 `
     document.addEventListener("DOMContentLoaded", () => {
-        const md = markdownit().use(texmath, {engine:katex, delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
+        const md = markdownit().use(texmath, {engine:katex, delimiters:'gitlab',macros:{"\\RR": "\\mathbb{R}"}});
         out.innerHTML = md.render(str);
     })
   </script>
