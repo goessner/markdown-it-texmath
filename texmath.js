@@ -16,7 +16,7 @@ function texmath(md, options) {
         else if (typeof module === "object")
             texmath.katex = require('katex');
         else  // artifical error object.
-            texmath.katex = { renderToString() { return 'No math renderer found.' }};
+            texmath.katex = { renderToString() { return 'No math renderer found.' } };
     }
 
     if (delimiters in texmath.rules) {
@@ -26,14 +26,14 @@ function texmath(md, options) {
         }
 
         for (const rule of texmath.rules[delimiters].block) {
-            md.block.ruler.before('fence', rule.name, texmath.block(rule));
+            md.block.ruler.before('fence', rule.name, texmath.block(rule));  // ! important for ```math delimiters
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
                                                                      .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
         }
     }
 }
 
-// texmath.inline = (rule) => dollar;  // just for testing ..
+// texmath.inline = (rule) => dollar;  // just for debugging/testing ..
 
 texmath.inline = (rule) => 
     function(state, silent) {
@@ -41,9 +41,9 @@ texmath.inline = (rule) =>
         const str = state.src;
         const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, pos));  // valid pre-condition ...
         const match = pre && rule.rex.exec(str);
-        const lastPos = match && (rule.rex.lastIndex - 1);
+        const res = !!match && pos < rule.rex.lastIndex && (!rule.post || rule.post(str, rule.rex.lastIndex - 1));
 
-        if (match && (!rule.post || rule.post(str, lastPos))) {   // match && valid post-condition
+        if (res) { 
             if (!silent) {
                 const token = state.push(rule.name, 'math', 0);
                 token.content = match[1];
@@ -51,51 +51,54 @@ texmath.inline = (rule) =>
             }
             state.pos = rule.rex.lastIndex;
         }
-        rule.rex.lastIndex = 0;
-        return !!match;
+        return res;
     }
 
 texmath.block = (rule) => 
     function block(state, begLine, endLine, silent) {
-        texmath.inBlockquote(state.tokens);  // cache current blockquote level ...
-
         const pos = state.bMarks[begLine] + state.tShift[begLine];
         const str = state.src;
         const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, pos));  // valid pre-condition ....
         const match = pre && rule.rex.exec(str);
-        const lastPos = match && (rule.rex.lastIndex - 1);
+        const res = !!match
+                 && pos < rule.rex.lastIndex 
+                 && (!rule.post || rule.post(str, rule.rex.lastIndex - 1));
 
-        if (match && (!rule.post || rule.post(str, lastPos))) {    // match and valid post-condition ...
-            if (match[1].includes('\n') && texmath.inBlockquote.level) // multiline display math inside of blockquote block.
-                match[1] = match[1].replace(/(^(?:\s*>)+)/gm,'\n');  // so remove all leading '>' inside of display math !
-            if (!silent) {
-                const token = state.push(rule.name, 'math', 0);
-                token.block = true;
-                token.content = match[1];
-                token.info = match[match.length-1];
-                token.markup = rule.tag;
-            }
-            for (let line=begLine, endpos=lastPos; line < endLine; line++)
-                if (endpos >= state.bMarks[line] && endpos <= state.eMarks[line]) { // line for end of block math found ...
-                    state.line = line+1;
+        if (res && !silent) {    // match and valid post-condition ...
+            const endpos = rule.rex.lastIndex - 1;
+            let curline;
+
+            for (curline = begLine; curline < endLine; curline++)
+                if (endpos >= state.bMarks[curline] + state.tShift[curline] && endpos <= state.eMarks[curline]) // line for end of block math found ...
                     break;
-                }
-        }
-        rule.rex.lastIndex = 0;
-        return !!match;
-    }
 
-texmath.inBlockquote = function(tokens) {
-    if (tokens && tokens.length) {
-        const len = tokens.length;
-        texmath.inBlockquote.level = tokens[len-1].type === 'blockquote_open'  ? tokens[len-1].level + 1
-                                   : tokens[len-1].type === 'blockquote_close' ? tokens[len-1].level
-                                   : texmath.inBlockquote.level;
+            // "this will prevent lazy continuations from ever going past our end marker"
+            // s. https://github.com/markdown-it/markdown-it-container/blob/master/index.js
+            const lineMax = state.lineMax;
+            const parentType = state.parentType;
+            state.lineMax = curline;
+            state.parentType = 'math';
+
+            if (parentType === 'blockquote') // remove all leading '>' inside multiline formula
+                match[1] = match[1].replace(/(\n*?^(?:\s*>)+)/gm,'');
+            // begin token
+            let token = state.push(rule.name, 'math', 1);  // 'math_block'
+            token.block = true;
+            token.markup = rule.tag;
+            token.content = match[1];
+            token.info = match[match.length-1];    // eq.no
+            token.map = [ begLine, curline ];
+            // end token
+            token = state.push(rule.name+'_end', 'math', -1);
+            token.block  = true;
+            token.markup = rule.tag;
+
+            state.parentType = parentType;
+            state.lineMax = lineMax;
+            state.line = curline+1;
+        }
+        return res;
     }
-    else
-        texmath.inBlockquote.level = 0;
-}
-texmath.inBlockquote.level = 0;
 
 texmath.render = function(tex,displayMode,options) {
     options.displayMode = displayMode;
@@ -157,6 +160,10 @@ function dollar(state, silent) {
 };
 */
 
+// used for enable/disable math rendering by `markdown-it`
+texmath.inlineRuleNames = ['math_inline','math_inline_double'];
+texmath.blockRuleNames  = ['math_block','math_block_eqno'];
+
 texmath.$_pre = (str,beg) => {
     const prv = beg > 0 ? str[beg-1].charCodeAt(0) : false;
     return !prv || prv !== 0x5c                // no backslash,
@@ -197,14 +204,14 @@ texmath.rules = {
                 tag: '$`'
             }
         ],
-        block: [ 
+        block: [
             {   name: 'math_block_eqno',
-                rex: /`{3}math\s*?([^`]+?)\s*?`{3}\s*?\(([^)$\r\n]+?)\)/gmy,
+                rex: /`{3}math\s*([^`]+?)\s*?`{3}\s*\(([^)\r\n]+?)\)/gm,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '```math'
             },
             {   name: 'math_block',
-                rex: /`{3}math\s*?([^`]*?)\s*?`{3}/gmy,
+                rex: /`{3}math\s*([^`]*?)\s*`{3}/gm,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '```math'
             }

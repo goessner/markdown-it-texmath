@@ -107,13 +107,7 @@ Use following links for `texmath.js` and `texmath.css`
   * Inline syntax of display math with `dollars` mode is supported starting from version "0.7.0". So `'This formula $$a+b=c$$ will result in display math presentation'`, i.e. gets displayed on a separate line. For *true* inline math use `$..$` mode like before.
 
 * __Multiline diplay math in `blockquote` block possible ?__   
-  * Display math inside of `blockquote` blocks is able to span multiple lines with version "0.6.8". Every single display math line **must** begin with a `>` character then, as in 
-```
-> $$ a +     
->     b 
-> = c
-> $$
-```
+  * Display math inside of `blockquote` blocks is able to span multiple lines with version "0.7.3".
 
 * __`markdown-it-texmath` with React Native does not work, why ?__
   * `markdown-it-texmath` is using regular expressions with `y` [(sticky) property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky) and cannot avoid this. The use of the `y` flag in regular expressions means the plugin is not compatible with React Native (which as of now doesn't support it and throws an error `Invalid flags supplied to RegExp constructor`).
@@ -124,6 +118,11 @@ Use following links for `texmath.js` and `texmath.css`
 
 
 ## CHANGELOG
+
+###  [0.8.0] on July 10, 2020
+* Infinite loop bug with `gitlab` mode and display math inside `blockquote` section removed.
+* Fundamental redesign of display math implementation.
+* Update to KaTeX version 0.12.0.
 
 ###  [0.7.2] on June 22, 2020
 * Regex bug with `gitlab` mode removed.

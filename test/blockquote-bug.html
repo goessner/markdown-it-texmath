@@ -12,37 +12,40 @@
 <body>
   <div id="out"></div>
   <script>
-    const str = `
-> *Hi*
-> > He $\`5 +\\pi\`$
-> >
-> > \`\`\`math 
-> > c^2 = 
-> > a^2 + \\phi
-> > \\sqrt{b^2}
-> > \`\`\` (2)
->
-> ahsgahg
 
-Ho xyz \`\`\`math\\psi+\\phi \`\`\` abcdef ashagsh
-
-abcdefghi
-
-\`\`\`math a + b = \\pi \`\`\` (3)
-x
-
->\`\`\`math
->\\frac{1}{2}
->\`\`\`
-
-> \`\`\`math
+const str = `
+hello$a+b=c$with 
+>$$
 > \\frac{1}{2}
-> \`\`\`
-
-`
-    document.addEventListener("DOMContentLoaded", () => {
-        const md = markdownit().use(texmath, {engine:katex, delimiters:'gitlab',macros:{"\\RR": "\\mathbb{R}"}});
+> $$ (4)
+> hello`
+/*
+const str = `
+ hello
+>
+> \`\`\`math 
+ x = \\frac{1}{2} 
+ \`\`\` (4)
+hartnäckig
+ hello`
+*/
+document.addEventListener("DOMContentLoaded", () => {
+        const md = markdownit().use(texmath, {engine:katex, delimiters:'dollars',macros:{"\\RR": "\\mathbb{R}"}});
+//        const md = markdownit().use(texmath, {engine:katex, delimiters:'gitlab',macros:{"\\RR": "\\mathbb{R}"}});
         out.innerHTML = md.render(str);
+//console.log(out.innerHTML)
+//console.log(md)
+/*
+md.block.ruler.disable(texmath.blockRuleNames, true);
+md.inline.ruler.disable(texmath.inlineRuleNames, true);
+*/
+//console.log(md.render(str))
+/*
+md.block.ruler.enable(texmath.blockRuleNames, true);
+md.inline.ruler.enable(texmath.inlineRuleNames, true);
+
+console.log(md.render(str))
+*/
     })
   </script>
 </body>
