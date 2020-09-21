@@ -107,7 +107,12 @@ texmath.render = function(tex,displayMode,options) {
         res = texmath.katex.renderToString(tex, options);
     }
     catch(err) {
-        res = tex+": "+err.message.replace("<","&lt;");
+        res = `${tex}:${err.message}`
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+        
     }
     return res;
 }
