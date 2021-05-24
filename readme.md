@@ -80,7 +80,7 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
                                           katexOptions: { macros: {"\\RR": "\\mathbb{R}"} }
                                         });
         document.getElementById('out').innerHTML = 
-            md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in //RR 2.');
+            md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in $\\RR 2$.');
     })
   </script>
 </body>
