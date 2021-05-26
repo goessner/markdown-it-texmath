@@ -1,15 +1,17 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Stefan Goessner - 2017-20. All rights reserved.
+ *  Copyright (c) Stefan Goessner - 2017-21. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 
 function texmath(md, options) {
     const delimiters = options && options.delimiters || 'dollars';
-    const katexOptions = options && options.katexOptions || { throwOnError: false };
-    katexOptions.macros = options && options.macros || katexOptions.macros;  // ensure backwards compatibility
+    const outerSpace = options && options.outerSpace || false;         // inline rules, effectively `dollars` require surrounding spaces, i.e ` $\psi$ `, to be accepted as inline formulas. This is primarily a guard against misinterpreting single `$`'s in normal markdown text (relevant for inline math only. Default: `false`, for backwards compatibility).
+    const katexOptions = options && options.katexOptions || {};
+    katexOptions.throwOnError = katexOptions.throwOnError || false; 
+    katexOptions.macros = katexOptions.macros || options && options.macros;  // ensure backwards compatibility
 
-    if (!texmath.katex) { // else ... depricated `use` method was used ...
+    if (!texmath.katex) { // else ... deprecated `use` method was used ...
         if (options && typeof options.engine === 'object') {
             texmath.katex = options.engine;
         }
@@ -21,6 +23,7 @@ function texmath(md, options) {
 
     if (delimiters in texmath.rules) {
         for (const rule of texmath.rules[delimiters].inline) {
+            if (!!outerSpace && 'outerSpace' in rule) rule.outerSpace = true;
             md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
             md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,!!rule.displayMode,katexOptions));
         }
@@ -39,9 +42,9 @@ texmath.inline = (rule) =>
     function(state, silent) {
         const pos = state.pos;
         const str = state.src;
-        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, pos));  // valid pre-condition ...
+        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, rule.outerSpace, pos));  // valid pre-condition ...
         const match = pre && rule.rex.exec(str);
-        const res = !!match && pos < rule.rex.lastIndex && (!rule.post || rule.post(str, rule.rex.lastIndex - 1));
+        const res = !!match && pos < rule.rex.lastIndex && (!rule.post || rule.post(str, rule.outerSpace, rule.rex.lastIndex - 1));
 
         if (res) { 
             if (!silent) {
@@ -58,11 +61,11 @@ texmath.block = (rule) =>
     function block(state, begLine, endLine, silent) {
         const pos = state.bMarks[begLine] + state.tShift[begLine];
         const str = state.src;
-        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, pos));  // valid pre-condition ....
+        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, false, pos));  // valid pre-condition ....
         const match = pre && rule.rex.exec(str);
         const res = !!match
                  && pos < rule.rex.lastIndex 
-                 && (!rule.post || rule.post(str, rule.rex.lastIndex - 1));
+                 && (!rule.post || rule.post(str, false, rule.rex.lastIndex - 1));
 
         if (res && !silent) {    // match and valid post-condition ...
             const endpos = rule.rex.lastIndex - 1;
@@ -112,7 +115,10 @@ texmath.render = function(tex,displayMode,options) {
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;")
           .replace(/'/g, "&#039;");
+<<<<<<< HEAD
+=======
         
+>>>>>>> fef22fff736ebad5ba4a535bfaf3ca26cc7c6e91
     }
     return res;
 }
@@ -169,14 +175,19 @@ function dollar(state, silent) {
 texmath.inlineRuleNames = ['math_inline','math_inline_double'];
 texmath.blockRuleNames  = ['math_block','math_block_eqno'];
 
-texmath.$_pre = (str,beg) => {
+texmath.$_pre = (str,outerSpace,beg) => {
     const prv = beg > 0 ? str[beg-1].charCodeAt(0) : false;
-    return !prv || prv !== 0x5c                // no backslash,
-                && (prv < 0x30 || prv > 0x39); // no decimal digit .. before opening '$'
+    return outerSpace ? !prv || prv === 0x20           // space  (avoiding regex's for performance reasons)
+                      : !prv || prv !== 0x5c           // no backslash,
+                             && (prv < 0x30 || prv > 0x39); // no decimal digit .. before opening '$'
 }
-texmath.$_post = (str,end) => {
+texmath.$_post = (str,outerSpace,end) => {
     const nxt = str[end+1] && str[end+1].charCodeAt(0);
-    return !nxt || nxt < 0x30 || nxt > 0x39;   // no decimal digit .. after closing '$'
+    return outerSpace ? !nxt || nxt === 0x20           // space  (avoiding regex's for performance reasons)
+                             || nxt === 0x2e           // '.'
+                             || nxt === 0x2c           // ','
+                             || nxt === 0x3b           // ';'
+                      : !nxt || nxt < 0x30 || nxt > 0x39;   // no decimal digit .. after closing '$'
 }
 
 texmath.rules = {
@@ -233,8 +244,10 @@ texmath.rules = {
                 rex: /\$((?:\S?)|(?:\S.*?\S))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
+                spaceEnclosed: false,
                 pre: texmath.$_pre,
-                post: texmath.$_post
+                post: texmath.$_post,
+
             }
         ],
         block: [
@@ -285,6 +298,7 @@ texmath.rules = {
                 rex: /\$((?:\S)|(?:\S.*?\S))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
+                outerSpace: false,
                 pre: texmath.$_pre,
                 post: texmath.$_post
             }
