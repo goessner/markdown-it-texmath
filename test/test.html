@@ -1,52 +1,24 @@
-
 <!doctype html>
 <html>
 <head>
   <meta charset='utf-8'>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js"></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+  <link rel="stylesheet" href="../css/texmath.css">
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
   <script src="../texmath.js"></script>
+  <title>test</title>
 </head>
 <body>
-  <h3>Start Typing: </h3> 
-  <div style="display:flex; padding:7px; border:2px solid #777; background-color:blanchedalmond;">
-    <textarea id="inp" rows=20 cols="60" oninput="parse()">
-# Triangle 
-
-Let the right triangle hypothenuse be aligned with the coordinate system *x-axis*. 
-The vector loop closure equation then reads
-        
-```math a{\bold e}_\alpha + b\tilde{\bold e}_\alpha + c{\bold e}_x = \bold 0 ``` (1)
-        
-with
-        
-```math {\bold e}_\alpha = \begin{pmatrix}\cos\alpha\\ \sin\alpha\end{pmatrix} \quad and \quad {\tilde\bold e}_\alpha = \begin{pmatrix}-\sin\alpha\\ \cos\alpha\end{pmatrix} ```
-        
-Resolving for the hypothenuse part ``c{\bold e}_x`` in the loop closure equation (1) 
-        
-```math -c{\bold e}_x = a{\bold e}_\alpha + b\tilde{\bold e}_\alpha ```
-        
-and squaring 
-        
-> finally results in the Pythagorean theorem (2)
->
-> ```math c^2 = a^2 + b^2 ``` (2)</textarea>
-    <div id="out" class="markdown-body" style="flex-grow:1; padding:5px;"></div>
-  </div>
+  <div id="out"></div>
   <script>
-    let md, inp, out, parse;
+    const str = `"Euler\'s identity $e^{i\\pi}+1=0$ is a beautiful formula in $\\RR^2$."`
     document.addEventListener("DOMContentLoaded", () => {
-        let tm = texmath.use(katex);
-        // overwrite texmath render function (suppressing katex)
-        // tm.render = function(tex, isblock) { return tex; }
-        md = markdownit({html:true}).use(tm,{delimiters:'julia'});
-        inp = document.getElementById('inp');
-        out = document.getElementById('out');
-        parse = () => { out.innerHTML = md.render(inp.value); }
-        parse();
-    });
+        const md = markdownit({html:true}).use(texmath, { engine: katex,
+                                                          delimiters: 'dollars',
+                                                          katexOptions: { macros: {"\\RR": "\\mathbb{R}"} } });
+        out.innerHTML = md.render(str);
+    })
   </script>
 </body>
 </html>

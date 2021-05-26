@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-texmath",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "markdown-it extension for rendering TeX Math",
   "keywords": [
     "TeX",
@@ -19,9 +19,8 @@
     "url": "git://github.com/goessner/markdown-it-texmath.git"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "katex": "^0.12.0",
-    "markdown-it": "^11.0.0"
+		"katex": "^0.13.11",
+		"markdown-it": "^12.0.6"
   }
 }

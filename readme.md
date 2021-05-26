@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/dt/markdown-it-texmath.svg)](https://www.npmjs.com/package/markdown-it-texmath)
 [![](https://data.jsdelivr.com/v1/package/npm/markdown-it-texmath/badge)](https://www.jsdelivr.com/package/npm/markdown-it-texmath)
 
+
 # markdown-it-texmath
 
 Add TeX math equations to your Markdown documents rendered by [markdown-it](https://github.com/markdown-it/markdown-it) parser. [KaTeX](https://github.com/Khan/KaTeX) is used as a fast math renderer.
@@ -50,30 +51,41 @@ npm install markdown-it-texmath
 ```
 Use it with JavaScript.
 ```js
-    tm = require('markdown-it-texmath'),
-    md = require('markdown-it')().use(tm, { engine: require('katex'),
-                                            delimiters:'dollars',
-                                            katexOptions: { macros: {"\\RR": "\\mathbb{R}"} }
-                                          });
+const tm = require('../texmath.js');
+const md = require('markdown-it')({html:true})
+                  .use(tm, { engine: require('katex'),
+                             delimiters: 'dollars',
+                             katexOptions: { macros: {"\\RR": "\\mathbb{R}"} } });
+const str = "Euler\'s identity $e^{i\\pi}+1=0$ is a beautiful formula in $\\RR^2$.";
 
-md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$.')
+md.render(str);
 ```
 
 ## Use in Browser
 ```html
+<!doctype html>
 <html>
 <head>
   <meta charset='utf-8'>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+  <link rel="stylesheet" href="../css/texmath.css">
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js"></script>
+  <script src="../texmath.js"></script>
+  <title>test</title>
 </head>
 <body>
   <div id="out"></div>
   <script>
+    const str = `"Euler\'s identity $e^{i\\pi}+1=0$ is a beautiful formula in $\\RR^2$."`
     document.addEventListener("DOMContentLoaded", () => {
+<<<<<<< HEAD
+        const md = markdownit({html:true})
+                      .use(texmath, { engine: katex,
+                                      delimiters: 'dollars',
+                                      katexOptions: { macros: {"\\RR": "\\mathbb{R}"} } } );
+        out.innerHTML = md.render(str);
+=======
         const tm = texmath.use(katex);
         const md = markdownit().use(tm, { engine: katex,
                                           delimiters:'dollars',
@@ -81,6 +93,7 @@ md.render('Euler\'s identity \(e^{i\pi}+1=0\) is a beautiful formula in $\\RR 2$
                                         });
         document.getElementById('out').innerHTML = 
             md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in $\\RR 2$.');
+>>>>>>> fef22fff736ebad5ba4a535bfaf3ca26cc7c6e91
     })
   </script>
 </body>
@@ -118,6 +131,12 @@ Use following links for `texmath.js` and `texmath.css`
 
 
 ## CHANGELOG
+
+###  [0.9.0] on May 26, 2021
+* KaTeX options `{katexOptions:...}` within markdown-it-texmath options are directly handed over to katex. See [KaTeX options](https://katex.org/docs/options.html). Thanks to [Kirill](https://github.com/xuhcc) for [pull request](https://github.com/goessner/markdown-it-texmath/pull/19).
+* Potential [error message XSS vulnerability](https://github.com/goessner/markdown-it-texmath/pull/22) fixed. Thanks to [CatNose](https://github.com/catnose99).
+* Using new boolean markdown-it-texmath `outerSpace` option, inline rules `dollars` explicitly require surrounding spaces when set to `true` (default is `false` for backwards compatibility). This is primarily a guard against misinterpreting single `$`'s in normal markdown text.
+* Update to KaTeX version 0.13.11.
 
 ###  [0.8.0] on July 10, 2020
 * Infinite loop bug with `gitlab` mode and display math inside `blockquote` section removed.

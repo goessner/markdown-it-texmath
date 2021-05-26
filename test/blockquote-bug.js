@@ -1,7 +1,6 @@
 'use strict';
 
 const tm = require('../texmath.js');
-//const md = require('markdown-it')({html:true}).use(tm,{engine:require('katex'), delimiters:'dollars'});
 const md = require('markdown-it')({html:true}).use(tm,{engine:require('katex'), delimiters:'dollars'});
 const str = `
 With 
