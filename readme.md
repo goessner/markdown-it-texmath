@@ -79,21 +79,11 @@ md.render(str);
   <script>
     const str = `"Euler\'s identity $e^{i\\pi}+1=0$ is a beautiful formula in $\\RR^2$."`
     document.addEventListener("DOMContentLoaded", () => {
-<<<<<<< HEAD
         const md = markdownit({html:true})
                       .use(texmath, { engine: katex,
                                       delimiters: 'dollars',
                                       katexOptions: { macros: {"\\RR": "\\mathbb{R}"} } } );
         out.innerHTML = md.render(str);
-=======
-        const tm = texmath.use(katex);
-        const md = markdownit().use(tm, { engine: katex,
-                                          delimiters:'dollars',
-                                          katexOptions: { macros: {"\\RR": "\\mathbb{R}"} }
-                                        });
-        document.getElementById('out').innerHTML = 
-            md.render('Euler\'s identity $e^{i\pi}+1=0$ is a beautiful formula in $\\RR 2$.');
->>>>>>> fef22fff736ebad5ba4a535bfaf3ca26cc7c6e91
     })
   </script>
 </body>

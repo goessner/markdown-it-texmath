@@ -115,10 +115,6 @@ texmath.render = function(tex,displayMode,options) {
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;")
           .replace(/'/g, "&#039;");
-<<<<<<< HEAD
-=======
-        
->>>>>>> fef22fff736ebad5ba4a535bfaf3ca26cc7c6e91
     }
     return res;
 }
