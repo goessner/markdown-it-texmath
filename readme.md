@@ -119,9 +119,9 @@ Use following links for `texmath.js` and `texmath.css`
   * `markdown-it-texmath` is a personal project of mine. As it does very well with KaTeX what I want it to do, I offer it to the public as an open source plugin. I do not have time or interest to integrate other math engines.
   But if someone wants to help here out, pull requests are always welcome.
 
-
 ## CHANGELOG
-
+###  [0.9.1] on July 02, 2021
+* potential XSS vulnerability with equation numbers fixed ([#29](https://github.com/goessner/markdown-it-texmath/pull/29)).
 ###  [0.9.0] on May 26, 2021
 * KaTeX options `{katexOptions:...}` within markdown-it-texmath options are directly handed over to katex. See [KaTeX options](https://katex.org/docs/options.html). Thanks to [Kirill](https://github.com/xuhcc) for [pull request](https://github.com/goessner/markdown-it-texmath/pull/19).
 * Potential [error message XSS vulnerability](https://github.com/goessner/markdown-it-texmath/pull/22) fixed. Thanks to [CatNose](https://github.com/catnose99).
