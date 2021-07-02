@@ -4,6 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 
+function escapeHTML(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 function texmath(md, options) {
     const delimiters = options && options.delimiters || 'dollars';
     const outerSpace = options && options.outerSpace || false;         // inline rules, effectively `dollars` require surrounding spaces, i.e ` $\psi$ `, to be accepted as inline formulas. This is primarily a guard against misinterpreting single `$`'s in normal markdown text (relevant for inline math only. Default: `false`, for backwards compatibility).
@@ -30,7 +39,7 @@ function texmath(md, options) {
 
         for (const rule of texmath.rules[delimiters].block) {
             md.block.ruler.before('fence', rule.name, texmath.block(rule));  // ! important for ```math delimiters
-            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,tokens[idx].info)  // equation number .. ?
+            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,escapeHTML(tokens[idx].info))  // equation number .. ?
                                                                      .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
         }
     }
@@ -110,11 +119,7 @@ texmath.render = function(tex,displayMode,options) {
         res = texmath.katex.renderToString(tex, options);
     }
     catch(err) {
-        res = `${tex}:${err.message}`
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
+        res = escapeHTML(`${tex}:${err.message}`)
     }
     return res;
 }
