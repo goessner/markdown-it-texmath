@@ -51,7 +51,7 @@ npm install markdown-it-texmath
 ```
 Use it with JavaScript.
 ```js
-const tm = require('../texmath.js');
+const tm = require('markdown-it-texmath');
 const md = require('markdown-it')({html:true})
                   .use(tm, { engine: require('katex'),
                              delimiters: 'dollars',
