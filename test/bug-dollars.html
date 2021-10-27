@@ -7,24 +7,27 @@
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
   <script src="../texmath.js"></script>
-  <script src="../texmath.js"></script>
 </head>
 <body>
+  <div id="out"></div>
   <script>
-    let md;
-    str = `
+    const str = `
   # Simple Dollar tests 
 
-  Inline $a+\$ = b$ and  $$a+\$ = b$$  or ...
+  Inline $a+\\$ = b$ works and block $$a+\\$ = b$$  or ...
 
-  $$a+\$ = b$$
+  $$a+\\$ = b$$
 
-  But this very special case does not work
+  also work. But this very special case does not work
 
-  $$a+ = \$$$
+  $$a+b = \\$$$
+
+  Insert at least another character at the end.
+
+  $$a+b = \\$ $$
 `
     document.addEventListener("DOMContentLoaded", () => {
-        md = markdownit().use(texmath.use(katex), {delimiters:'dollars'});
+        const md = markdownit().use(texmath, { engine: katex, delimiters: 'dollars' });
         out.innerHTML = md.render(str);
     })
   </script>

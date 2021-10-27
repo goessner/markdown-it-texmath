@@ -3,7 +3,6 @@
 [![npm](https://img.shields.io/npm/dt/markdown-it-texmath.svg)](https://www.npmjs.com/package/markdown-it-texmath)
 [![](https://data.jsdelivr.com/v1/package/npm/markdown-it-texmath/badge)](https://www.jsdelivr.com/package/npm/markdown-it-texmath)
 
-
 # markdown-it-texmath
 
 Add TeX math equations to your Markdown documents rendered by [markdown-it](https://github.com/markdown-it/markdown-it) parser. [KaTeX](https://github.com/Khan/KaTeX) is used as a fast math renderer.
@@ -51,7 +50,7 @@ npm install markdown-it-texmath
 ```
 Use it with JavaScript.
 ```js
-const tm = require('../texmath.js');
+const tm = require('markdown-it-texmath');
 const md = require('markdown-it')({html:true})
                   .use(tm, { engine: require('katex'),
                              delimiters: 'dollars',
@@ -120,6 +119,8 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+###  [0.9.2] on October 27, 2021
+* Fixing disability to include escaped dollar when using dollars delimiters ([#32](https://github.com/goessner/markdown-it-texmath/issues/32)).
 ###  [0.9.1] on July 02, 2021
 * potential XSS vulnerability with equation numbers fixed ([#29](https://github.com/goessner/markdown-it-texmath/pull/29)).
 ###  [0.9.0] on May 26, 2021

@@ -288,7 +288,7 @@ texmath.rules = {
     dollars: {
         inline: [
             {   name: 'math_inline_double',
-                rex: /\${2}((?:\S)|(?:\S.*?\S))\${2}/gy,
+                rex: /\${2}(.+?)\${2}/gy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$',
                 displayMode: true,
@@ -296,7 +296,7 @@ texmath.rules = {
                 post: texmath.$_post
             },
             {   name: 'math_inline',
-                rex: /\$((?:\S)|(?:\S.*?\S))\$/gy,
+                rex: /\$((?:[^\r\n\t\f\v \\])|(?:\S.*?[^\r\n\t\f\v \\]))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
                 outerSpace: false,
@@ -306,12 +306,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\${2}([^$]+?)\${2}\s*?\(([^)\s]+?)\)/gmy,
+                rex: /\${2}(.+?)\${2}\s*?\(([^)\s]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '$$'
             },
             {   name: 'math_block',
-                rex: /\${2}([^$]+?)\${2}/gmy,
+                rex: /\${2}(.+?)\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
             }
