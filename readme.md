@@ -119,6 +119,8 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+###  [0.9.3] on October 28, 2021
+* Fixing newline bug in 'dollars' regexes. ([#32](https://github.com/goessner/markdown-it-texmath/issues/32)).
 ###  [0.9.2] on October 27, 2021
 * Fixing disability to include escaped dollar when using dollars delimiters ([#32](https://github.com/goessner/markdown-it-texmath/issues/32)).
 ###  [0.9.1] on July 02, 2021

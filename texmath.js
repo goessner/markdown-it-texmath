@@ -306,12 +306,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\${2}(.+?)\${2}\s*?\(([^)\s]+?)\)/gmy,
+                rex: /\${2}([^]+?[^\\])\${2}\s*?\(([^)\s]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '$$'
             },
             {   name: 'math_block',
-                rex: /\${2}(.+?)\${2}/gmy,
+                rex: /\${2}([^]+?[^\\])\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
             }

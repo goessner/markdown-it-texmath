@@ -12,19 +12,20 @@
   <div id="out"></div>
   <script>
     const str = `
-  # Simple Dollar tests 
+  # Simple Dollar tests
+  ## Inline
 
-  Inline $a+\\$ = b$ works and block $$a+\\$ = b$$  or ...
+  here "$a+\\$ = b$" we "$\\$$" go "$\\text{\\$some...\\$}$"
 
-  $$a+\\$ = b$$
+  ## Inline block (single line only)
+  
+  $$a+\\$ = \\text{\\$more...\\$} \\$$$  or ...
 
-  also work. But this very special case does not work
+  ## Block (multiline)
 
-  $$a+b = \\$$$
-
-  Insert at least another character at the end.
-
-  $$a+b = \\$ $$
+  $$
+  a+\\$ = \\text{\\$text...\\$} \\$
+  $$
 `
     document.addEventListener("DOMContentLoaded", () => {
         const md = markdownit().use(texmath, { engine: katex, delimiters: 'dollars' });
