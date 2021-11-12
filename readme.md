@@ -23,6 +23,10 @@ This extension is a comfortable tool for scientists, engineers and students with
     * inline: `\(...\)`
     * display: `\[...\]`
     * display + equation number: `\[...\] (1)`
+  * `'doxygen'`
+    * inline: `\f$...$\f`
+    * display: `\f[...\f]`
+    * display + equation number: `\f[...\f] (1)`
   * `'gitlab'`
     * inline: ``$`...`$``
     * display: `` ```math ... ``` ``
