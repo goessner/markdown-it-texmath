@@ -213,6 +213,27 @@ texmath.rules = {
             }
         ]
     },
+    doxygen: {
+        inline: [ 
+            {   name: 'math_inline', 
+                rex: /\\f\$(.+?)\\f\$/gy,
+                tmpl: '<eq>$1</eq>',
+                tag: '\\f$'
+            }
+        ],
+        block: [
+            {   name: 'math_block_eqno',
+                rex: /\\f\[([^]+?)\\f\]\s*?\(([^)\s]+?)\)/gmy,
+                tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
+                tag: '\\f['
+            },
+            {   name: 'math_block',
+                rex: /\\f\[([^]+?)\\f\]/gmy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '\\f['
+            }
+        ]
+    },
     gitlab: {
         inline: [ 
             {   name: 'math_inline',
@@ -296,7 +317,7 @@ texmath.rules = {
                 post: texmath.$_post
             },
             {   name: 'math_inline',
-                rex: /\$((?:[^\r\n\t\f\v \\])|(?:\S.*?[^\r\n\t\f\v \\]))\$/gy,
+                rex: /\$((?:[^\s\\])|(?:\S.*?[^s\\]))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
                 outerSpace: false,
@@ -306,12 +327,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\${2}([^]+?[^\\])\${2}\s*?\(([^)\s]+?)\)/gmy,
+                rex: /\${2}([^]*?[^\\])\${2}\s*?\(([^)\s]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '$$'
             },
             {   name: 'math_block',
-                rex: /\${2}([^]+?[^\\])\${2}/gmy,
+                rex: /\${2}([^]*?[^\\])\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
             }
