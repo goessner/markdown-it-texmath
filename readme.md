@@ -123,6 +123,8 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+###  [0.9.5] on November 12, 2021
+* More Optimization done with the 'dollars' regexes.
 ###  [0.9.4] on November 12, 2021
 * Optimizing the 'dollars' regexes. Thanks to [Erik Demaine](https://github.com/edemaine).
 * Adding 'doxygen' delimiters support. ([#31](https://github.com/goessner/markdown-it-texmath/issues/31)). Thanks to [arwedus](https://github.com/arwedus).
