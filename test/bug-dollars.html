@@ -26,6 +26,8 @@
   $$
   a+\\$ = \\text{\\$text...\\$} \\$
   $$
+
+inline $$x^2$$ formula
 `
     document.addEventListener("DOMContentLoaded", () => {
         const md = markdownit().use(texmath, { engine: katex, delimiters: 'dollars' });

@@ -123,6 +123,8 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+###  [0.9.6] on November 16, 2021
+* Small bug in 'dollars' inline-display-mode regex fixed.
 ###  [0.9.5] on November 12, 2021
 * More Optimization done with the 'dollars' regexes.
 ###  [0.9.4] on November 12, 2021

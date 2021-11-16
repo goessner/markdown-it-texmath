@@ -309,7 +309,7 @@ texmath.rules = {
     dollars: {
         inline: [
             {   name: 'math_inline_double',
-                rex: /\${2}([^]*?)[^\\]\${2}/gy,
+                rex: /\${2}([^]*?[^\\])\${2}/gy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$',
                 displayMode: true,
