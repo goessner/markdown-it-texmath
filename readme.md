@@ -123,6 +123,8 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+###  [0.9.7] on December 07, 2021
+* Redundant `</math>` end-tag with display-mode equations removed. All modes were affected ... invisible effect though. Thanks to [yuanbug](https://github.com/yuanbug) for reporting.
 ###  [0.9.6] on November 16, 2021
 * Small bug in 'dollars' inline-display-mode regex fixed.
 ###  [0.9.5] on November 12, 2021

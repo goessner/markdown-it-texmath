@@ -96,14 +96,13 @@ texmath.block = (rule) =>
             // begin token
             let token = state.push(rule.name, 'math', 1);  // 'math_block'
             token.block = true;
-            token.markup = rule.tag;
+            token.tag = rule.tag;
+            token.markup = '';
             token.content = match[1];
             token.info = match[match.length-1];    // eq.no
             token.map = [ begLine, curline ];
-            // end token
-            token = state.push(rule.name+'_end', 'math', -1);
-            token.block  = true;
-            token.markup = rule.tag;
+//            token.hidden = true;
+            // end token ... superfluous ...
 
             state.parentType = parentType;
             state.lineMax = lineMax;
@@ -309,7 +308,7 @@ texmath.rules = {
     dollars: {
         inline: [
             {   name: 'math_inline_double',
-                rex: /\${2}([^]*?[^\\])\${2}/gy,
+                rex: /\${2}([^$]*?[^\\])\${2}/gy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$',
                 displayMode: true,
@@ -317,7 +316,7 @@ texmath.rules = {
                 post: texmath.$_post
             },
             {   name: 'math_inline',
-                rex: /\$((?:[^\s\\])|(?:\S.*?[^s\\]))\$/gy,
+                rex: /\$((?:[^\s\\])|(?:\S.*?[^\s\\]))\$/gy,
                 tmpl: '<eq>$1</eq>',
                 tag: '$',
                 outerSpace: false,
@@ -327,12 +326,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /\${2}([^]*?[^\\])\${2}\s*?\(([^)\s]+?)\)/gmy,
+                rex: /\${2}([^$]*?[^\\])\${2}\s*?\(([^)\s]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '$$'
             },
             {   name: 'math_block',
-                rex: /\${2}([^]*?[^\\])\${2}/gmy,
+                rex: /\${2}([^$]*?[^\\])\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
             }
