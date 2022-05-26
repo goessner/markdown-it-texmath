@@ -100,7 +100,7 @@ texmath.block = (rule) =>
             token.markup = '';
             token.content = match[1];
             token.info = match[match.length-1];    // eq.no
-            token.map = [ begLine, curline ];
+            token.map = [ begLine, curline+1 ];
 //            token.hidden = true;
             // end token ... superfluous ...
 
