@@ -94,7 +94,7 @@ texmath.block = (rule) =>
             if (parentType === 'blockquote') // remove all leading '>' inside multiline formula
                 match[1] = match[1].replace(/(\n*?^(?:\s*>)+)/gm,'');
             // begin token
-            let token = state.push(rule.name, 'math', 1);  // 'math_block'
+            let token = state.push(rule.name, 'math', 0);  // 'math_block'
             token.block = true;
             token.tag = rule.tag;
             token.markup = '';
