@@ -7,25 +7,36 @@
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
   <script src="../texmath.js"></script>
-  <script src="../texmath.js"></script>
+  <title>beg_end test</title>
 </head>
 <body>
+  <div id="out"></div>
   <script>
-    let md;
-    str = `
-  # Simple Dollar tests 
+    const str = 
+`"Euler\'s identity 
 
-  Inline $a+\$ = b$ and  $$a+\$ = b$$  or ...
+\\begin{equation}
+ e^{i\\pi}+1=0
+\\end{equation} 
 
-  $$a+\$ = b$$
+$$
+e^{i\\pi}+1=0
+$$
 
-  But this very special case does not work
+\\begin{equation}
+\\begin{pmatrix}
+A & B \\\\ B & C
+\\end{pmatrix} 
+\\end{equation} 
 
-  $$a+ = \$$$
-`
+
+is a beautiful $a^2+b^2=c^2$ formula."`
     document.addEventListener("DOMContentLoaded", () => {
-        md = markdownit().use(texmath.use(katex), {delimiters:'dollars'});
+        const md = markdownit({html:true}).use(texmath, { engine: katex,
+                                                          delimiters: ["dollars","beg_end"]
+                                                        });
         out.innerHTML = md.render(str);
+//        console.log(md.render(str))
     })
   </script>
 </body>

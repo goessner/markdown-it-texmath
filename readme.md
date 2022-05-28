@@ -7,6 +7,27 @@
 
 Add TeX math equations to your Markdown documents rendered by [markdown-it](https://github.com/markdown-it/markdown-it) parser. [KaTeX](https://github.com/Khan/KaTeX) is used as a fast math renderer.
 
+## What's New?
+* `markdown-it-texmath` reached quite a stable state with version 1.0 .
+* Native `begin{...}` / `end{...}` environments are supported as delimiters itself ... thanks to [William Stein](https://github.com/williamstein) for [proposing](https://github.com/goessner/markdown-it-texmath/issues/41).
+
+  ```
+  \begin{equation}
+    a^2+b^2=c^2
+  \end{equation}
+  ```
+  They can even be nested.
+  ```
+  \begin{equation}
+    \begin{pmatrix}
+      A & B \\ B & C
+    \end{pmatrix} 
+  \end{equation}
+  ```
+
+* Different delimiters can be merged. Delimiters options property supports array notation for that. Example: `delimiters: ['dollars','beg_end']`. Thanks to [Liu YongLiang](https://github.com/tlylt) for [proposing](https://github.com/goessner/markdown-it-texmath/issues/40).
+
+
 ## Features
 Simplify the process of authoring markdown documents containing math formulas.
 This extension is a comfortable tool for scientists, engineers and students with markdown as their first choice document format.
@@ -39,6 +60,10 @@ This extension is a comfortable tool for scientists, engineers and students with
     * inline: ``$$...$$``
     * display: `$$...$$`
     * display + equation number: `$$...$$ (1)`
+  * `'beg_end'` (display math only)
+    * inline: N/A
+    * display: `begin{...}...end{...}`
+    * display + equation number: N/A
 
 ## Show me 
 
@@ -123,6 +148,14 @@ Use following links for `texmath.js` and `texmath.css`
   But if someone wants to help here out, pull requests are always welcome.
 
 ## CHANGELOG
+###  [1.0.0] on May 28, 2022
+* Update to KaTeX version `0.15.6`.
+* Update to `markdown-it` `13.0.1`.
+* [Bug fixed](https://github.com/goessner/markdown-it-texmath/pull/42) in level handling with `markdown-it`. Thanks to [williamstein](https://github.com/williamstein).
+* [Bug fixed](https://github.com/goessner/markdown-it-texmath/pull/43) in mapping with `markdown-it`. Thanks to [williamstein](https://github.com/williamstein).
+* Supporting native `begin{..}` / `end{...}` environments as delimiters itself. Thanks to [williamstein](https://github.com/williamstein) for [proposing](https://github.com/goessner/markdown-it-texmath/issues/41).
+* Merging different delimiters for simultaneous use via `delimiters:[<delims1>, <delims2>]`. Thanks to [tlylt](https://github.com/tlylt) for [proposing](https://github.com/goessner/markdown-it-texmath/issues/40).
+
 ###  [0.9.7] on December 07, 2021
 * Redundant `</math>` end-tag with display-mode equations removed. All modes were affected ... invisible effect though. Thanks to [yuanbug](https://github.com/yuanbug) for reporting.
 ###  [0.9.6] on November 16, 2021

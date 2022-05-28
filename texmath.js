@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Stefan Goessner - 2017-21. All rights reserved.
+ *  Copyright (c) Stefan Goessner - 2017-22. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 'use strict';
@@ -14,7 +14,7 @@ function escapeHTML(text) {
 }
 
 function texmath(md, options) {
-    const delimiters = options && options.delimiters || 'dollars';
+    const delimiters = texmath.mergeDelimiters(options && options.delimiters);
     const outerSpace = options && options.outerSpace || false;         // inline rules, effectively `dollars` require surrounding spaces, i.e ` $\psi$ `, to be accepted as inline formulas. This is primarily a guard against misinterpreting single `$`'s in normal markdown text (relevant for inline math only. Default: `false`, for backwards compatibility).
     const katexOptions = options && options.katexOptions || {};
     katexOptions.throwOnError = katexOptions.throwOnError || false; 
@@ -30,19 +30,33 @@ function texmath(md, options) {
             texmath.katex = { renderToString() { return 'No math renderer found.' } };
     }
 
-    if (delimiters in texmath.rules) {
-        for (const rule of texmath.rules[delimiters].inline) {
-            if (!!outerSpace && 'outerSpace' in rule) rule.outerSpace = true;
-            md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,!!rule.displayMode,katexOptions));
+    // inject inline rules to markdown-it
+    for (const rule of delimiters.inline) {
+        if (!!outerSpace && 'outerSpace' in rule) rule.outerSpace = true;
+        md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
+        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,!!rule.displayMode,katexOptions));
+    }
+    // inject block rules to markdown-it
+    for (const rule of delimiters.block) {
+        md.block.ruler.before('fence', rule.name, texmath.block(rule));  // ! important for ```math delimiters
+        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,escapeHTML(tokens[idx].info))  // equation number .. ?
+                                                                 .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
+    }
+}
+
+texmath.mergeDelimiters = function(delims) {
+    const delimsArr = Array.isArray(delims) ? delims 
+                    : typeof delims === "string" ? [delims]
+                    : ['dollars'];
+    const delimiters = { inline:[], block:[]};  // target of merge process ...
+
+    for (const delim of delimsArr)  // merge them into delimiters ...
+        if (delim in texmath.rules) {
+            delimiters.inline.push(...texmath.rules[delim].inline);
+            delimiters.block.push(...texmath.rules[delim].block);
         }
 
-        for (const rule of texmath.rules[delimiters].block) {
-            md.block.ruler.before('fence', rule.name, texmath.block(rule));  // ! important for ```math delimiters
-            md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,escapeHTML(tokens[idx].info))  // equation number .. ?
-                                                                     .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
-        }
-    }
+    return delimiters;
 }
 
 // texmath.inline = (rule) => dollar;  // just for debugging/testing ..
@@ -100,7 +114,7 @@ texmath.block = (rule) =>
             token.markup = '';
             token.content = match[1];
             token.info = match[match.length-1];    // eq.no
-            token.map = [ begLine, curline ];
+            token.map = [ begLine, curline+1 ];
 //            token.hidden = true;
             // end token ... superfluous ...
 
@@ -302,6 +316,17 @@ texmath.rules = {
                 rex: /\${2}([^$]+?)\${2}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '$$'
+            }
+        ]
+    },
+    beg_end: {
+        inline: [],
+        block: [
+            {
+                name: "math_block",
+                rex: /(\\(?:begin)\{([a-z]+)\}[\s\S]+?\\(?:end)\{\2\})/gmy, // regexp to match \begin{...}...\end{...} environment.
+                tmpl: "<section><eqn>$1</eqn></section>",
+                tag: "\\"
             }
         ]
     },
