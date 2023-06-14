@@ -10,7 +10,8 @@ function escapeHTML(text) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/'/g, "&apos;")
+        .replace(/\//g, "&sol;");
 }
 
 function texmath(md, options) {
