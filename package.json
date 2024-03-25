@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "katex": "^0.15.6",
+    "katex": "^0.16.10",
     "markdown-it": "^13.0.1"
   }
 }
