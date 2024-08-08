@@ -208,6 +208,12 @@ texmath.$_post = (str,outerSpace,end) => {
 texmath.rules = {
     brackets: {
         inline: [ 
+            {   name: 'math_inline_double',
+                rex: /\\\[([\s\S]+?)\\\]/gy,
+                tmpl: '<section><eqn>$1</eqn></section>',
+                tag: '\\[',
+                displayMode: true
+            },
             {   name: 'math_inline',
                 rex: /\\\((.+?)\\\)/gy,
                 tmpl: '<eq>$1</eq>',
