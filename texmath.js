@@ -35,13 +35,28 @@ function texmath(md, options) {
     for (const rule of delimiters.inline) {
         if (!!outerSpace && 'outerSpace' in rule) rule.outerSpace = true;
         md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,!!rule.displayMode,katexOptions));
+        md.renderer.rules[rule.name] = (tokens, idx, _opts, env) => {
+            const options = {
+                ...katexOptions,
+                macros: env.macros || katexOptions.macros,
+            };
+            return rule.tmpl.replace(
+                /\$1/,
+                texmath.render(tokens[idx].content, !!rule.displayMode, options)
+            );
+        };
     }
     // inject block rules to markdown-it
     for (const rule of delimiters.block) {
         md.block.ruler.before('fence', rule.name, texmath.block(rule));  // ! important for ```math delimiters
-        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,escapeHTML(tokens[idx].info))  // equation number .. ?
-                                                                 .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
+        md.renderer.rules[rule.name] = (tokens, idx, _opts, env) => {
+            const options = {
+                ...katexOptions,
+                macros: env.macros || katexOptions.macros,
+            };
+            return rule.tmpl.replace(/\$2/, escapeHTML(tokens[idx].info))  // equation number .. ?
+                .replace(/\$1/, texmath.render(tokens[idx].content, true, options));
+        };
     }
 }
 

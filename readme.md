@@ -88,6 +88,13 @@ const str = "Euler\'s identity $e^{i\\pi}+1=0$ is a beautiful formula in $\\RR^2
 
 md.render(str);
 ```
+If you want to persist macros between multiple renders, you can pass `macros` to `render()`'s second argument:
+```js
+const macros = {};
+md.render('$$\\gdef\\RR{\\mathbb{R}}$$', { macros });
+console.debug(macros);  // { '\\RR': '\\mathbb{R}' }
+md.render('$$\\RR^2$$', { macros });  // $$\\mathbb{R}^2$$
+```
 
 ## Use in Browser
 ```html
