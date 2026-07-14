@@ -21,27 +21,26 @@ function texmath(md, options) {
     katexOptions.throwOnError = katexOptions.throwOnError || false; 
     katexOptions.macros = katexOptions.macros || options && options.macros;  // ensure backwards compatibility
 
-    if (!texmath.katex) { // else ... deprecated `use` method was used ...
-        if (options && typeof options.engine === 'object') {
-            texmath.katex = options.engine;
-        }
-        else if (typeof module === "object")
-            texmath.katex = require('katex');
-        else  // artifical error object.
-            texmath.katex = { renderToString() { return 'No math renderer found.' } };
-    }
+    // Resolve the rendering engine once per plugin instance and capture it in this
+    // closure, so each `md.use(texmath, ...)` gets its own engine instead of sharing a
+    // process-wide singleton. `texmath.katex`, set by the deprecated `texmath.use()`
+    // API, is honored only as a fallback for backward compatibility.
+    const engine = (options && typeof options.engine === 'object') ? options.engine
+                 : texmath.katex ? texmath.katex
+                 : (typeof module === "object") ? require('katex')
+                 : { renderToString() { return 'No math renderer found.' } };  // artificial error object
 
     // inject inline rules to markdown-it
     for (const rule of delimiters.inline) {
         if (!!outerSpace && 'outerSpace' in rule) rule.outerSpace = true;
         md.inline.ruler.before('escape', rule.name, texmath.inline(rule));  // ! important
-        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(tokens[idx].content,!!rule.displayMode,katexOptions));
+        md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$1/,texmath.render(engine,tokens[idx].content,!!rule.displayMode,katexOptions));
     }
     // inject block rules to markdown-it
     for (const rule of delimiters.block) {
         md.block.ruler.before('fence', rule.name, texmath.block(rule));  // ! important for ```math delimiters
         md.renderer.rules[rule.name] = (tokens, idx) => rule.tmpl.replace(/\$2/,escapeHTML(tokens[idx].info))  // equation number .. ?
-                                                                 .replace(/\$1/,texmath.render(tokens[idx].content,true,katexOptions));
+                                                                 .replace(/\$1/,texmath.render(engine,tokens[idx].content,true,katexOptions));
     }
 }
 
@@ -126,11 +125,11 @@ texmath.block = (rule) =>
         return res;
     }
 
-texmath.render = function(tex,displayMode,options) {
+texmath.render = function(engine,tex,displayMode,options) {
     options.displayMode = displayMode;
     let res;
     try {
-        res = texmath.katex.renderToString(tex, options);
+        res = engine.renderToString(tex, options);
     }
     catch(err) {
         res = escapeHTML(`${tex}:${err.message}`)
