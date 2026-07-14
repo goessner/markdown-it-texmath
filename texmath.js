@@ -85,14 +85,27 @@ texmath.block = (rule) =>
     function block(state, begLine, endLine, silent) {
         const pos = state.bMarks[begLine] + state.tShift[begLine];
         const str = state.src;
-        const pre = str.startsWith(rule.tag, rule.rex.lastIndex = pos) && (!rule.pre || rule.pre(str, false, pos));  // valid pre-condition ....
-        const match = pre && rule.rex.exec(str);
+        // Bound the region the block regex may scan. Executed against the full
+        // `state.src`, the lazy `[\s\S]+?` / `[^..]+?` groups used by the block
+        // rules advance one character at a time whenever the closing delimiter
+        // is missing, so a single unterminated opening delimiter costs
+        // O(remaining source) and a document full of them costs O(n^2).
+        // Restricting the match to the block region markdown-it delegated
+        // (further capped to MAX_MATH_LEN) keeps every invocation bounded, so
+        // total work stays linear in the document length.
+        const MAX_MATH_LEN = 0x20000;  // 128 KiB - generous upper bound for a single block formula
+        const endMax = state.eMarks[Math.min(endLine, state.lineMax) - 1];
+        const end = Math.min(endMax, pos + MAX_MATH_LEN);
+        const pre = str.startsWith(rule.tag, pos) && (!rule.pre || rule.pre(str, false, pos));  // valid pre-condition ....
+        rule.rex.lastIndex = 0;  // the match is anchored at the start of the sliced window
+        const match = pre && rule.rex.exec(str.slice(pos, end));
+        const endIndex = match ? pos + rule.rex.lastIndex : 0;  // absolute offset of the match end within `str`
         const res = !!match
-                 && pos < rule.rex.lastIndex 
-                 && (!rule.post || rule.post(str, false, rule.rex.lastIndex - 1));
+                 && pos < endIndex
+                 && (!rule.post || rule.post(str, false, endIndex - 1));
 
         if (res && !silent) {    // match and valid post-condition ...
-            const endpos = rule.rex.lastIndex - 1;
+            const endpos = endIndex - 1;
             let curline;
 
             for (curline = begLine; curline < endLine; curline++)
@@ -258,12 +271,12 @@ texmath.rules = {
         ],
         block: [
             {   name: 'math_block_eqno',
-                rex: /`{3}math\s*([^`]+?)\s*?`{3}\s*\(([^)\r\n]+?)\)/gm,
+                rex: /`{3}math\s*([^`]+?)\s*?`{3}\s*\(([^)\r\n]+?)\)/gmy,
                 tmpl: '<section class="eqno"><eqn>$1</eqn><span>($2)</span></section>',
                 tag: '```math'
             },
             {   name: 'math_block',
-                rex: /`{3}math\s*([^`]*?)\s*`{3}/gm,
+                rex: /`{3}math\s*([^`]*?)\s*`{3}/gmy,
                 tmpl: '<section><eqn>$1</eqn></section>',
                 tag: '```math'
             }
