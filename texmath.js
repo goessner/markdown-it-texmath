@@ -127,10 +127,10 @@ texmath.block = (rule) =>
     }
 
 texmath.render = function(tex,displayMode,options) {
-    options.displayMode = displayMode;
+    const opts = Object.assign({}, options, { displayMode });  // per-call copy, so the caller's shared options object is never mutated
     let res;
     try {
-        res = texmath.katex.renderToString(tex, options);
+        res = texmath.katex.renderToString(tex, opts);
     }
     catch(err) {
         res = escapeHTML(`${tex}:${err.message}`)
