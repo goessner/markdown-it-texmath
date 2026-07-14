@@ -52,7 +52,7 @@ texmath.mergeDelimiters = function(delims) {
     const delimiters = { inline:[], block:[]};  // target of merge process ...
 
     for (const delim of delimsArr)  // merge them into delimiters ...
-        if (delim in texmath.rules) {
+        if (Object.prototype.hasOwnProperty.call(texmath.rules, delim)) {
             delimiters.inline.push(...texmath.rules[delim].inline);
             delimiters.block.push(...texmath.rules[delim].block);
         }
